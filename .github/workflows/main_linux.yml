@@ -1,9 +1,9 @@
 on: [push]
 
 jobs:
-  build_godot_windows:
+  build_godot_LINUX:
     runs-on: ubuntu-latest
-    name: Build for Windows
+    name: Build for lINUX
     steps:
       - uses: actions/checkout@v1
       - name: Build for Linux
@@ -15,5 +15,5 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: ld55_linux
-          path: export/linux/ld55.x86_64
+          path: export/linux
 

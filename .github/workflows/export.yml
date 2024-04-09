@@ -1,0 +1,48 @@
+on: [push]
+
+jobs:
+  build_godot_windows:
+    runs-on: ubuntu-latest
+    name: Build for Windows
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build for Windows
+        id: build_win
+        uses: bbrieber/godot_ci_image@v4.2.1
+        with:
+          build-config: 'WindowsDesktop'
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ld55_win
+          path: export/win  
+  build_godot_linux:
+    runs-on: ubuntu-latest
+    name: Build for linux
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build for Linux
+        id: build_linux
+        uses: bbrieber/godot_ci_image@v4.2.1
+        with:
+          build-config: 'Linux/X11'
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ld55_linux
+          path: export/linux
+  build_godot_web:
+    runs-on: ubuntu-latest
+    name: Build for web
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build for web
+        id: build_web
+        uses: bbrieber/godot_ci_image@v4.2.1
+        with:
+          build-config: 'Web'
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ld55_web
+          path: export/web

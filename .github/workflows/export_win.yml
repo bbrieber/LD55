@@ -15,4 +15,5 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: ld55_win
-          path: export/win/ld55.exe
+          path: export/win
+  

@@ -55,7 +55,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: export/linux/ld_linux.zip
-          asset_name: ld55_linux-${{ github.ref }}.zip
+          asset_name: ld55_linux-${{ github.ref_name }}.zip
           asset_content_type: application/zip
       - name: Upload Release Asset Windows
         id: upload-release-asset-win
@@ -65,7 +65,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: export/win/ld_win.zip
-          asset_name: ld55_win-${{ github.ref }}.zip
+          asset_name: ld55_win-${{ github.ref_name }}.zip
           asset_content_type: application/zip
       - name: Upload Release Asset Web
         id: upload-release-asset-web
@@ -75,5 +75,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: export/web/ld_web.zip
-          asset_name: ld55_web-${{ github.ref }}.zip
+          asset_name: ld55_web-${{ github.ref_name }}.zip
           asset_content_type: application/zip

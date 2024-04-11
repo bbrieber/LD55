@@ -8,6 +8,8 @@ name: Create Release
 
 jobs:
   build:
+    uses: ./.github/workflows/export.yml
+  release:
     name: Create Release
     runs-on: ubuntu-latest
     steps:

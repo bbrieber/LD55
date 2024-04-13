@@ -2,16 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q0ceu58tme3f"
-path="res://.godot/imported/LD55.png-65f0a9c63b6a911ebe3f85304962d137.ctex"
+uid="uid://xewvbmyaqcw1"
+path="res://.godot/imported/GearJoint2D.svg-2dedc6f4cee55fc66b36a76c99f208d6.ctex"
 metadata={
+"has_editor_variant": true,
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://background/LD55.png"
-dest_files=["res://.godot/imported/LD55.png-65f0a9c63b6a911ebe3f85304962d137.ctex"]
+source_file="res://addons/godot-box2d/GearJoint2D.svg"
+dest_files=["res://.godot/imported/GearJoint2D.svg-2dedc6f4cee55fc66b36a76c99f208d6.ctex"]
 
 [params]
 
@@ -32,3 +33,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=false

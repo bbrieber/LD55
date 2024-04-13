@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw72woobhs7hj"]
+
+[ext_resource type="Script" path="res://player/HeadRay.gd" id="1_fpy7e"]
+
+[node name="HeadRay" type="Node2D"]
+position = Vector2(-2, -13)
+script = ExtResource("1_fpy7e")
+ray_length = 2
+ray_offset = 1
+
+[node name="RayCastCorner" type="RayCast2D" parent="."]
+target_position = Vector2(0, -4)
+
+[node name="RayCastBuffer" type="RayCast2D" parent="RayCastCorner"]
+position = Vector2(1, 0)
+target_position = Vector2(0, -4)

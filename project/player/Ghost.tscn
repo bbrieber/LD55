@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw38au7o3o2gv"]
+
+[ext_resource type="Script" path="res://player/Ghost.gd" id="1_l8cho"]
+
+[node name="Ghost" type="Sprite2D"]
+modulate = Color(0.698039, 0.698039, 0.698039, 0.65098)
+light_mask = 0
+script = ExtResource("1_l8cho")

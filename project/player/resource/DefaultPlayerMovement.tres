@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="PlayerMovementConfig" load_steps=2 format=3 uid="uid://cpkkqpsdilw4s"]
+
+[ext_resource type="Script" path="res://player/resource/PlayerMovementConfig.gd" id="1_ro8ur"]
+
+[resource]
+script = ExtResource("1_ro8ur")
+run_time_to_peak = 0.2
+run_time_to_stop = 0.1
+run_velocity = 128.0
+jump_height = 36.0
+jump_time_to_peak = 0.4
+jump_time_to_descend = 0.3
+glide_time_to_descend = 1.0
+jump_stop_factor = 2.0
+jump_coyote_time = 0.2
+time_to_max_fallspeed = 0.3
+slide_time_to_descend = 0.6
+dash_distance = 32.0
+dash_time_to_peak = 0.3
+dash_stop_factor = 3.0
+climb_velocity = 32.0
+climb_time_to_peak = 0.6

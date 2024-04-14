@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogBlock" load_steps=2 format=3 uid="uid://bbshqn1f1cd7d"]
+
+[ext_resource type="Script" path="res://ui/dialog/DialogBlock.gd" id="1_5thrc"]
+
+[resource]
+script = ExtResource("1_5thrc")
+speaker = 1
+speaker_name = &"Ghost Boy"
+text = &"Where am I?\n\nI am quite sure I should be dead!\n"

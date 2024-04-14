@@ -174,6 +174,17 @@ func is_dashing( ) -> bool:
 var _is_climbing = false 
 
 
+func update_glide_energy():
+	if not is_gliding():
+		glide_energy_timer.stop()
+		glide_energy_timer.timeout.disconnect(update_glide_energy)
+		return
+	AlEnergySystem.reduce_energy(player.player_movement_config.glide_energy_per_second)
+	
+	
+	
+#region climb
+
 func update_climb_energy():
 	if not is_climbing():
 		climb_energy_timer.stop()
@@ -181,12 +192,52 @@ func update_climb_energy():
 		return
 	AlEnergySystem.reduce_energy(player.player_movement_config.climb_energy_per_second)
 	
-func update_glide_energy():
-	if not is_gliding():
-		glide_energy_timer.stop()
-		glide_energy_timer.timeout.disconnect(update_glide_energy)
-		return
-	AlEnergySystem.reduce_energy(player.player_movement_config.glide_energy_per_second)
+	
+func start_climb( ) -> void :
+	if climb_energy_timer.is_stopped():
+		climb_energy_timer.timeout.connect(update_climb_energy)
+		climb_energy_timer.start()
+	_is_climbing = true 
+	
+func stop_climb( ) -> void:
+	_is_climbing = false
+		
+func is_climbing( ) -> bool:
+	return _is_climbing
+
+func can_climb()->bool :
+	return _wants_to_climb and player.is_on_wall() and AlEnergySystem.get_max_energy() >= player.player_movement_config.climb_energy_per_second
+
+func _on_climb_event(wants_to_climb):
+	print("wanna climb " , wants_to_climb )
+	_wants_to_climb = wants_to_climb
+#endregion climb
+
+
+#region glide
+func _on_glide_event(wants_to_glide):
+	print("wanna glide " , wants_to_glide )
+	
+	_wants_to_glide = wants_to_glide
+
+#endregion glide
+
+
+#region charge
+
+func _on_charge_event(wants_to_charge):
+	_wants_to_charge = wants_to_charge
+
+#endregion charge
+	
+#region fade
+func _on_fade_event(wants_to_fade):
+	if not _fade and wants_to_fade:
+		_wants_to_fade = true		
+	if _fade_active and wants_to_fade:
+		stop_fading() 
+	if not wants_to_fade:
+		_wants_to_fade = false
 	
 	
 	
@@ -199,48 +250,6 @@ func update_fade_energy():
 	AlEnergySystem.reduce_energy(player.player_movement_config.fade_energy_per_second)
 	if AlEnergySystem.get_current_energy() <player.player_movement_config.fade_energy_per_second:
 		stop_fading()
-	
-func start_climb( ) -> void :
-	if climb_energy_timer.is_stopped():
-		climb_energy_timer.timeout.connect(update_climb_energy)
-		climb_energy_timer.start()
-	_is_climbing = true 
-	
-	
-func stop_climb( ) -> void:
-	_is_climbing = false
-		
-func is_climbing( ) -> bool:
-	return _is_climbing
-
-func can_climb()->bool :
-	return _wants_to_climb and player.is_on_wall() and AlEnergySystem.get_max_energy() >= player.player_movement_config.climb_energy_per_second
-
-
-
-func _on_glide_event(wants_to_glide):
-	print("wanna glide " , wants_to_glide )
-	
-	_wants_to_glide = wants_to_glide
-
-
-func _on_climb_event(wants_to_climb):
-	print("wanna climb " , wants_to_climb )
-	_wants_to_climb = wants_to_climb
-
-
-func _on_charge_event(wants_to_charge):
-	_wants_to_charge = wants_to_charge
-	
-	
-func _on_fade_event(wants_to_fade):
-	if not _fade and wants_to_fade:
-		_wants_to_fade = true		
-	if _fade_active and wants_to_fade:
-		stop_fading() 
-	if not wants_to_fade:
-		_wants_to_fade = false
-	
 	
 	
 var _fade = false	
@@ -269,3 +278,5 @@ func _on_fade_ready():
 	if fade_energy_timer.is_stopped():
 		fade_energy_timer.timeout.connect(update_fade_energy)
 		fade_energy_timer.start()
+
+#endregion fade

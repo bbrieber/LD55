@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Dialogue" load_steps=5 format=3 uid="uid://djqs1a1kp5ctk"]
+
+[ext_resource type="Script" path="res://ui/dialog/Dialogue.gd" id="1_fbpgy"]
+[ext_resource type="Script" path="res://ui/dialog/DialogBlock.gd" id="1_ycyhv"]
+
+[sub_resource type="Resource" id="Resource_tc1q5"]
+script = ExtResource("1_ycyhv")
+speaker = 1
+speaker_name = &"Ghost Boy"
+text = &"Where am I?\n\nI am quite sure I should be dead!\n"
+
+[sub_resource type="Resource" id="Resource_xgwov"]
+script = ExtResource("1_ycyhv")
+speaker = 2
+speaker_name = &"Whitch"
+text = &"You don\'t look like the the strongest Warrior of all time."
+
+[resource]
+script = ExtResource("1_fbpgy")
+dialog_blocks = Array[ExtResource("1_ycyhv")]([SubResource("Resource_tc1q5"), SubResource("Resource_xgwov")])

@@ -322,9 +322,10 @@ position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_da1d5")
 debug_color = Color(0.937255, 0.0901961, 0.576471, 0.419608)
 
-[node name="Skin" type="Node2D" parent="."]
+[node name="Skin" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, -8)
 script = ExtResource("1_68yiu")
+player = NodePath("..")
 ghost_scene = ExtResource("4_e5u6u")
 
 [node name="SkinSprite" type="Sprite2D" parent="Skin"]

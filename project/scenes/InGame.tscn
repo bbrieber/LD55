@@ -1,10 +1,15 @@
-[gd_scene load_steps=19 format=3 uid="uid://dopvktdwow2x2"]
+[gd_scene load_steps=25 format=3 uid="uid://dopvktdwow2x2"]
 
 [ext_resource type="Texture2D" uid="uid://bsj1yffhc6ynn" path="res://background/LD55_BG_5.png" id="1_00n8o"]
 [ext_resource type="Script" path="res://scripts/UI_EnergyBar.gd" id="2_ntm7e"]
 [ext_resource type="Texture2D" uid="uid://dywhb84sbakn5" path="res://background/LD55_BG_4.png" id="2_rmh05"]
+[ext_resource type="Script" path="res://scenes/UI_Dialogue.gd" id="3_3dit8"]
+[ext_resource type="Texture2D" uid="uid://c56vaoaxr8lgl" path="res://menu/Dialog_Box.png" id="3_oaw0x"]
 [ext_resource type="Texture2D" uid="uid://cada6sw6amayk" path="res://background/LD55_BG_3.png" id="3_ohu6k"]
+[ext_resource type="Resource" uid="uid://bbshqn1f1cd7d" path="res://ui/dialog/TestDialogBlock.tres" id="4_2s4cy"]
 [ext_resource type="Texture2D" uid="uid://cpfkimbg1t40h" path="res://background/LD55_BG_2.png" id="4_7to5x"]
+[ext_resource type="Resource" uid="uid://djqs1a1kp5ctk" path="res://ui/dialog/TestDialog.tres" id="4_hxtia"]
+[ext_resource type="FontFile" uid="uid://c1bt7i2lj3e47" path="res://fonts/Silkscreen-Regular.ttf" id="4_i8ekr"]
 [ext_resource type="Texture2D" uid="uid://nl7kv12l0hg4" path="res://background/LD55_BG_1.png" id="5_1nmfx"]
 [ext_resource type="TileSet" uid="uid://bcxbnn32fyu0k" path="res://map/ts_graveyard.tres" id="6_vgbv1"]
 [ext_resource type="PackedScene" uid="uid://d1ucl6tqgbvcl" path="res://player/player.tscn" id="7_okguq"]
@@ -30,6 +35,9 @@ expand_margin_bottom = 1.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s0uqp"]
 bg_color = Color(0.305882, 0.694118, 0.4, 1)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u2uix"]
+blend_mode = 3
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8etf5"]
 size = Vector2(400, 180)
 
@@ -46,7 +54,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Debug" type="Control" parent="CanvasLayer/HUD" node_paths=PackedStringArray("player")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,26 +70,31 @@ offset_bottom = 40.0
 
 [node name="FPS" type="Label" parent="CanvasLayer/HUD/Debug/VBox"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_i8ekr")
 theme_override_font_sizes/font_size = 8
 text = "FPS :"
 
 [node name="IsClimbing" type="Label" parent="CanvasLayer/HUD/Debug/VBox"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_i8ekr")
 theme_override_font_sizes/font_size = 8
 text = "FPS :"
 
 [node name="IsGliding" type="Label" parent="CanvasLayer/HUD/Debug/VBox"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_i8ekr")
 theme_override_font_sizes/font_size = 8
 text = "FPS :"
 
 [node name="Pos" type="Label" parent="CanvasLayer/HUD/Debug/VBox"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_i8ekr")
 theme_override_font_sizes/font_size = 8
 text = "FPS :"
 
 [node name="Vel" type="Label" parent="CanvasLayer/HUD/Debug/VBox"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_i8ekr")
 theme_override_font_sizes/font_size = 8
 text = "FPS :"
 
@@ -123,6 +135,81 @@ rounded = true
 fill_mode = 1
 show_percentage = false
 script = ExtResource("2_ntm7e")
+
+[node name="Dialogue" type="Control" parent="CanvasLayer/HUD"]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_3dit8")
+test_dialog = ExtResource("4_hxtia")
+test_dialog_block = ExtResource("4_2s4cy")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/HUD/Dialogue"]
+material = SubResource("CanvasItemMaterial_u2uix")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -70.0
+offset_right = 150.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_oaw0x")
+region_rect = Rect2(4, 4, 8, 8)
+
+[node name="Speaker_1" type="Label" parent="CanvasLayer/HUD/Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 44.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0, 0.847059, 0.654902, 1)
+theme_override_constants/line_spacing = -4
+theme_override_fonts/font = ExtResource("4_i8ekr")
+theme_override_font_sizes/font_size = 8
+text = "Ghost Boy"
+
+[node name="Speaker_2" type="Label" parent="CanvasLayer/HUD/Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 245.0
+offset_top = 2.0
+offset_right = 297.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.890196, 0, 0.301961, 1)
+theme_override_constants/line_spacing = -4
+theme_override_fonts/font = ExtResource("4_i8ekr")
+theme_override_font_sizes/font_size = 8
+text = "Witch"
+horizontal_alignment = 2
+
+[node name="Text" type="Label" parent="CanvasLayer/HUD/Dialogue/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -297.0
+offset_top = -47.0
+offset_right = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.694118, 0.694118, 0.694118, 1)
+theme_override_constants/line_spacing = -4
+theme_override_fonts/font = ExtResource("4_i8ekr")
+theme_override_font_sizes/font_size = 8
+text = "This is a Dialogue Test with a Lot of fText lets see What Hapens if  we reach the end of the Line
+
+asdsadasd"
+autowrap_mode = 3
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 scroll_offset = Vector2(913, 500)
@@ -190,6 +277,7 @@ position = Vector2(200, 90)
 shape = SubResource("RectangleShape2D_8etf5")
 
 [node name="Node" type="Node" parent="2D_Canvas"]
+process_mode = 3
 script = ExtResource("9_gcrik")
 
 [node name="Node2" type="Node" parent="2D_Canvas"]
@@ -221,6 +309,9 @@ script = ExtResource("12_8ep5p")
 player = NodePath("../2D_Canvas/Player")
 initial_spawn_point = NodePath("../2D_Canvas/Node2/SpawnPoint")
 
+[connection signal="body_entered" from="2D_Canvas/TileMap/SpikeTrapGround" to="2D_Canvas/TileMap/SpikeTrapGround" method="_on_body_entered"]
+[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@22964" to="2D_Canvas/TileMap/@Area2D@22964" method="_on_body_entered"]
+[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@22965" to="2D_Canvas/TileMap/@Area2D@22965" method="_on_body_entered"]
 [connection signal="respawn" from="2D_Canvas/Player" to="MapManager" method="_on_player_respawn"]
 [connection signal="body_entered" from="2D_Canvas/Area2D" to="2D_Canvas/Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="2D_Canvas/Collectables/Energy_Spawn_Point/EnergyBall" to="2D_Canvas/Collectables/Energy_Spawn_Point/EnergyBall" method="_on_body_entered"]

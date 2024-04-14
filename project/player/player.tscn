@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://d1ucl6tqgbvcl"]
+[gd_scene load_steps=62 format=3 uid="uid://d1ucl6tqgbvcl"]
 
 [ext_resource type="Texture2D" uid="uid://itcqm5ff4ubh" path="res://sprite_sheets/Ghost_Boy.png" id="1_2qfp7"]
 [ext_resource type="Script" path="res://player/PlayerSkin.gd" id="1_68yiu"]
@@ -43,7 +43,9 @@
 [ext_resource type="Script" path="res://player/state_machine/states/StateClimb.gd" id="27_effcg"]
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Ground_Charge.gd" id="29_cqnyn"]
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Charge_Idle.gd" id="30_abkuh"]
+[ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Ground_Fade.gd" id="33_kfku6"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateDeath.gd" id="34_8btwd"]
+[ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Fade_Idle.gd" id="34_wrjy3"]
 [ext_resource type="Script" path="res://player/DamageHandler.gd" id="36_5vkiu"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateCharge.gd" id="39_jetua"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateFade.gd" id="44_nv1s5"]
@@ -108,6 +110,46 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [32, 33, 34]
+}
+
+[sub_resource type="Animation" id="Animation_mw2gp"]
+resource_name = "Fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.392157)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.396078)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:collision_layer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [34, 2]
 }
 
 [sub_resource type="Animation" id="Animation_efc40"]
@@ -249,46 +291,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [24]
-}
-
-[sub_resource type="Animation" id="Animation_mw2gp"]
-resource_name = "Fade"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.392157)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.396078)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("..:collision_layer")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [34, 2]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2bqof"]
@@ -546,6 +548,24 @@ player = NodePath("../../../..")
 start_state = NodePath("../../States/Charge")
 target_state = NodePath("../../States/Idle")
 
+[node name="Idle_Fade" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("33_kfku6")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Idle")
+target_state = NodePath("../../States/Fade")
+
+[node name="Move_Fade" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("33_kfku6")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Move")
+target_state = NodePath("../../States/Fade")
+
+[node name="Fade_Idle" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("34_wrjy3")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Fade")
+target_state = NodePath("../../States/Idle")
+
 [node name="States" type="Node" parent="Managers/StateMachine"]
 
 [node name="Any" type="Node" parent="Managers/StateMachine/States"]
@@ -613,6 +633,8 @@ player = NodePath("../..")
 script = ExtResource("36_5vkiu")
 
 [connection signal="respawn" from="." to="Skin" method="_on_player_respawn"]
+[connection signal="fade_animation_finished" from="Skin" to="Managers/PlayerState" method="_on_fade_ready"]
 [connection signal="charge_event" from="Managers/InputProcessor" to="Managers/PlayerState" method="_on_charge_event"]
 [connection signal="climb_event" from="Managers/InputProcessor" to="Managers/PlayerState" method="_on_climb_event"]
+[connection signal="fade_event" from="Managers/InputProcessor" to="Managers/PlayerState" method="_on_fade_event"]
 [connection signal="glide_event" from="Managers/InputProcessor" to="Managers/PlayerState" method="_on_glide_event"]

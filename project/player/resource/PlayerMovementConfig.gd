@@ -32,6 +32,7 @@ class_name PlayerMovementConfig extends Resource
 @export_category("Energy")
 @export var climb_energy_per_second: float = 0.5
 @export var glide_energy_per_second: float = 0.5
+@export var fade_energy_per_second: float = 0.5
 @export var dash_energy: float = 5
 @export var recover_energy_per_second: float = 2
 

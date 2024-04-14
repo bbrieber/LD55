@@ -46,6 +46,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Debug" type="Control" parent="CanvasLayer/HUD" node_paths=PackedStringArray("player")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,9 +221,6 @@ script = ExtResource("12_8ep5p")
 player = NodePath("../2D_Canvas/Player")
 initial_spawn_point = NodePath("../2D_Canvas/Node2/SpawnPoint")
 
-[connection signal="body_entered" from="2D_Canvas/TileMap/SpikeTrapGround" to="2D_Canvas/TileMap/SpikeTrapGround" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@97740" to="2D_Canvas/TileMap/@Area2D@97740" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@97741" to="2D_Canvas/TileMap/@Area2D@97741" method="_on_body_entered"]
 [connection signal="respawn" from="2D_Canvas/Player" to="MapManager" method="_on_player_respawn"]
 [connection signal="body_entered" from="2D_Canvas/Area2D" to="2D_Canvas/Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="2D_Canvas/Collectables/Energy_Spawn_Point/EnergyBall" to="2D_Canvas/Collectables/Energy_Spawn_Point/EnergyBall" method="_on_body_entered"]

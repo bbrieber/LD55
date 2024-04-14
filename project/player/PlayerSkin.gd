@@ -4,6 +4,8 @@ class_name PlayerSkin extends Node2D
 @onready var anim_player : AnimationPlayer = $SkinAnimationPlayer
 @onready var sprite : Sprite2D = $SkinSprite
 
+signal respawn_animation_finished
+signal fade_animation_finished
 
 enum ANIMATION_STATE {
 	IDLE,
@@ -28,13 +30,16 @@ func start_charging():
 	
 func fade_away():
 	anim_player.play("Fade")
-	var t =	$VFX/Center_Position/Recharge as CPUParticles2D
+	var t =	$VFX/Center_Position/FadeAway as CPUParticles2D
 	t.emitting = true
+	
+	await anim_player.animation_finished
+	fade_animation_finished.emit()
 	
 	
 func fade_back():
 	anim_player.play_backwards("Fade")
-	var t =	$VFX/Center_Position/Recharge as CPUParticles2D
+	var t =	$VFX/Center_Position/FadeBack as CPUParticles2D
 	t.emitting = true
 	
 func stop_charging():
@@ -109,7 +114,6 @@ func _ready():
 	stop_charging()
 
 
-signal respawn_animation_finished
 
 func respawn_player():
 	anim_player.play_backwards("Die")

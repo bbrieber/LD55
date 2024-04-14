@@ -11,12 +11,9 @@ var should_start_glide: bool = false
 var should_stop_glide: bool = false
 
 var wanna_glide : bool = false
-
-
 var wanna_climb : bool = false
-
-
 var wanna_charge : bool = false
+var wanna_fade : bool = false
 
 
 var should_start_fade: bool
@@ -32,6 +29,7 @@ var main_direction: Vector2
 signal glide_event(wants_to_glide:bool)
 signal climb_event(wants_to_climb:bool)
 signal charge_event(wants_to_charge:bool)
+signal fade_event(wants_to_fade:bool)
 
 
 func _physics_process (_delta : float ) -> void:
@@ -59,6 +57,12 @@ func _physics_process (_delta : float ) -> void:
 	if wanna_climb != _wanna_climb:
 		climb_event.emit(_wanna_climb)	
 		wanna_climb = _wanna_climb
+		
+		
+	var _wanna_fade = Input.is_action_pressed("fade") 
+	if wanna_fade != _wanna_fade:
+		fade_event.emit(_wanna_fade)	
+		wanna_fade = _wanna_fade
 	
 		
 	#should_start_climb = Input.is_action_just_pressed("climb") 	

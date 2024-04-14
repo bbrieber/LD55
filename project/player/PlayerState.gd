@@ -96,7 +96,12 @@ func start_gliding():
 	if glide_energy_timer.is_stopped():
 		glide_energy_timer.timeout.connect(update_glide_energy)
 		glide_energy_timer.start()
-		
+	
+func can_fade_away()->bool:
+	return _wants_to_fade and not _fade
+	
+func is_fade_active()->bool:
+	return _fade_active
 
 func stop_gliding():	
 	print("Stop GLide")
@@ -189,8 +194,11 @@ func update_fade_energy():
 	if not is_fading():
 		fade_energy_timer.stop()
 		fade_energy_timer.timeout.disconnect(update_fade_energy)
+		
 		return
 	AlEnergySystem.reduce_energy(player.player_movement_config.fade_energy_per_second)
+	if AlEnergySystem.get_current_energy() <player.player_movement_config.fade_energy_per_second:
+		stop_fading()
 	
 func start_climb( ) -> void :
 	if climb_energy_timer.is_stopped():
@@ -225,17 +233,39 @@ func _on_charge_event(wants_to_charge):
 	_wants_to_charge = wants_to_charge
 	
 	
+func _on_fade_event(wants_to_fade):
+	if not _fade and wants_to_fade:
+		_wants_to_fade = true		
+	if _fade_active and wants_to_fade:
+		stop_fading() 
+	if not wants_to_fade:
+		_wants_to_fade = false
+	
+	
+	
 var _fade = false	
 
 func is_fading()-> bool:
-	return _fade
+	return _fade_active
 	
 func start_fading()-> void:
 	_fade = true
-	if fade_energy_timer.is_stopped():
-		fade_energy_timer.timeout.connect(update_fade_energy)
-		fade_energy_timer.start()
+	pass # Replace with function bod
 	
 	
 func stop_fading()-> void:
+	print("Fade Back")
 	_fade = false
+	_fade_active= false
+	player.player_skin.fade_back()
+
+
+
+var _fade_active :bool = false
+
+func _on_fade_ready():
+	print("fade ready")
+	_fade_active = true
+	if fade_energy_timer.is_stopped():
+		fade_energy_timer.timeout.connect(update_fade_energy)
+		fade_energy_timer.start()

@@ -14,8 +14,11 @@ enum ANIMATION_STATE {
 	CLIMB,
 	TURN,
 	WALL_SLIDE,
-	DASH_FORWARD
+	DASH_FORWARD,
+	DIE
 }
+
+	
 
 func play_animation(animation: ANIMATION_STATE):
 	if animation == ANIMATION_STATE.IDLE:
@@ -34,6 +37,8 @@ func play_animation(animation: ANIMATION_STATE):
 		anim_player.play("Climb")
 	elif animation == ANIMATION_STATE.DASH_FORWARD:
 		anim_player.play("DashForward")
+	elif animation == ANIMATION_STATE.DIE:
+		anim_player.play("Die")
 		
 	
 	
@@ -77,3 +82,13 @@ func _ready():
 	_ghost_timer.wait_time = 0.05
 	_ghost_timer.one_shot = false
 	add_child(_ghost_timer)
+
+
+signal respawn_animation_finished
+
+func respawn_player():
+	anim_player.play_backwards("Die")
+	await anim_player.animation_finished
+	respawn_animation_finished.emit()
+	
+		

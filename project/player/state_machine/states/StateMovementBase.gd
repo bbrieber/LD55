@@ -5,7 +5,6 @@ class_name StateMovementBase extends State
 var gravity = - ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
-@export var player: Player
 
 #@export var run_time_to_peak : float = 0.1
 ##@export var run_time_to_stop : float = 0.1

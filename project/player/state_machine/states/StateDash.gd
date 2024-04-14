@@ -11,12 +11,6 @@ class_name State_Dash extends StateMovementBase
 @export var jump_head_cast_right : JumpHeadCast
 
 
-#@export var jump_height : float = 64
-#@export var jump_time_to_descend : float = 0.3
-
-#@export var jump_time_to_peak : float = 0.4
-
-#@export var jump_stop_factor : float = 2
 
 @onready var dash_velocity : float = (2*player.player_movement_config.dash_distance) / player.player_movement_config.dash_time_to_peak
 @onready var dash_gravity : float = (-2*player.player_movement_config.dash_distance) / (player.player_movement_config.dash_time_to_peak *player.player_movement_config.dash_time_to_peak)
@@ -29,7 +23,7 @@ var main_dir:Vector2
 func enter(_msg := {}) -> void:
 	#player.player_skin.play_animation(PlayerSkin.ANIMATION_STATE.JUMP)
 	main_dir = player.input_processor.main_direction.normalized()
-	
+	AlEnergySystem.reduce_energy(player.player_movement_config.dash_energy)
 	print("start dashing" )
 	_dash_timer.timeout.connect(__dash_timer_over)
 	_dash_timer.wait_time = dash_duration

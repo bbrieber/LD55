@@ -24,7 +24,8 @@ func collect_children(children):
 	for child in children:
 		if child is State:
 			child.state_machine = self
-		if child is StateTransition:		
+		if child is StateTransition:	
+			child.state_machine = self	
 			transitions.append(child)
 		collect_children(child.get_children())
 
@@ -54,7 +55,7 @@ func check_transitions():
 		if trans.should_transition():
 			state.exit()
 			
-			print(state.name +" / "+ trans.target_state.name)
+			#print(state.name +" / "+ trans.target_state.name)
 			state = trans.target_state
 			state.enter({}) 
 			emit_signal("transitioned", trans.target_state.name)
@@ -71,7 +72,7 @@ func transition_to(target_state_name: String, msg: Dictionary = {}) -> void:
 		return
 	
 	state.exit()
-	print(state.name +" / "+ target_state_name)
+	#print(state.name +" / "+ target_state_name)
 	state = get_node(target_state_name)
 	state.enter(msg)
 	emit_signal("transitioned", state.name)

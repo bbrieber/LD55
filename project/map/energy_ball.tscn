@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://di8kmptygdf20"]
+
+[ext_resource type="Script" path="res://map/energy_ball.gd" id="1_6vudm"]
+[ext_resource type="Texture2D" uid="uid://1s7tyirv5cev" path="res://sprite_sheets/particle_ball.png" id="1_wkepy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnl3m"]
+radius = 8.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m1vn3"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_jim4b"]
+offsets = PackedFloat32Array(0, 0.412073, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.0613007, 0.846348, 0.0516156, 0.82, 1, 91.733, 1, 0)
+
+[node name="EnergyBall" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_6vudm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_gnl3m")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_m1vn3")
+position = Vector2(0, -8)
+amount = 4
+randomness = 0.53
+texture = ExtResource("1_wkepy")
+gravity = Vector2(0, 0)
+angle_min = -720.0
+angle_max = 720.0
+color = Color(0.101961, 0.890196, 0.0509804, 0.623529)
+color_ramp = SubResource("Gradient_jim4b")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

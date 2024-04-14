@@ -2,7 +2,6 @@ class_name State_Wall extends State
 
 
 @export var wallRaycast: WallRaycast
-@export var player: Player
 
 func enter(_msg := {}) -> void:
 	state_started.emit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://d1ucl6tqgbvcl"]
+[gd_scene load_steps=51 format=3 uid="uid://d1ucl6tqgbvcl"]
 
 [ext_resource type="Texture2D" uid="uid://itcqm5ff4ubh" path="res://sprite_sheets/Ghost_Boy.png" id="1_2qfp7"]
 [ext_resource type="Script" path="res://player/PlayerSkin.gd" id="1_68yiu"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dw72woobhs7hj" path="res://player/head_ray.tscn" id="2_01vxq"]
 [ext_resource type="Resource" uid="uid://cpkkqpsdilw4s" path="res://player/resource/DefaultPlayerMovement.tres" id="2_3kaoq"]
 [ext_resource type="Script" path="res://player/state_machine/StateMachine.gd" id="3_1tha2"]
+[ext_resource type="Resource" uid="uid://bvyvv3habcbsi" path="res://scripts/default_energy.tres" id="3_lffau"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateAny.gd" id="4_2ixjx"]
 [ext_resource type="PackedScene" uid="uid://dw38au7o3o2gv" path="res://player/Ghost.tscn" id="4_e5u6u"]
 [ext_resource type="Script" path="res://player/WallCast.gd" id="6_hjnxt"]
@@ -25,6 +26,7 @@
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Fall_Jump.gd" id="15_fx22o"]
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Any_Dash.gd" id="16_rrbt5"]
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Dash_Fall.gd" id="17_vni7i"]
+[ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Any_Dead.gd" id="18_b1axs"]
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Dash_Idle.gd" id="19_aeffl"]
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Air_Wall.gd" id="19_sw0wk"]
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Climb_Wall.gd" id="20_84rrh"]
@@ -34,7 +36,10 @@
 [ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Wall_Fall.gd" id="22_taknk"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateGlide.gd" id="24_rcc57"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateWall.gd" id="26_dbiao"]
+[ext_resource type="Script" path="res://player/state_machine/transitions/Trans_Death_Idle.gd" id="26_ifsrr"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateClimb.gd" id="27_effcg"]
+[ext_resource type="Script" path="res://player/state_machine/states/StateDeath.gd" id="34_8btwd"]
+[ext_resource type="Script" path="res://player/DamageHandler.gd" id="36_5vkiu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_da1d5"]
 size = Vector2(4, 13)
@@ -54,6 +59,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [28, 29, 30, 31]
+}
+
+[sub_resource type="Animation" id="Animation_a65ip"]
+resource_name = "Die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SkinSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [32, 33, 34]
 }
 
 [sub_resource type="Animation" id="Animation_efc40"]
@@ -152,6 +172,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2bqof"]
 _data = {
 "Climb": SubResource("Animation_wxv3w"),
+"Die": SubResource("Animation_a65ip"),
 "Fall": SubResource("Animation_efc40"),
 "Idle": SubResource("Animation_x1i6i"),
 "Jump": SubResource("Animation_0j8hb"),
@@ -165,9 +186,10 @@ collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_my2o4")
 player_movement_config = ExtResource("2_3kaoq")
+initial_energy = ExtResource("3_lffau")
 player_skin = NodePath("Skin")
-input_processor = NodePath("InputProcessor")
-player_state = NodePath("PlayerState")
+input_processor = NodePath("Managers/InputProcessor")
+player_state = NodePath("Managers/PlayerState")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)
@@ -210,189 +232,6 @@ target_position = Vector2(-1, 0)
 position = Vector2(2, -5)
 target_position = Vector2(1, 0)
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("any_state", "player")]
-script = ExtResource("3_1tha2")
-initial_state = NodePath("States/Idle")
-any_state = NodePath("States/Any")
-player = NodePath("..")
-
-[node name="Transitions" type="Node" parent="StateMachine"]
-
-[node name="Idle_Move" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("7_wcq5c")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Idle")
-target_state = NodePath("../../States/Move")
-
-[node name="Idle_Jump" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("8_u0eg6")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Idle")
-target_state = NodePath("../../States/Jump")
-
-[node name="Move_Idle" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("8_7wd3k")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Move")
-target_state = NodePath("../../States/Idle")
-
-[node name="Move_Jump" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("8_u0eg6")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Move")
-target_state = NodePath("../../States/Jump")
-
-[node name="Move_Fall" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("start_state", "target_state")]
-script = ExtResource("10_w3oa7")
-start_state = NodePath("../../States/Move")
-target_state = NodePath("../../States/Fall")
-
-[node name="Jump_Fall" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("start_state", "target_state")]
-script = ExtResource("11_xj3s7")
-start_state = NodePath("../../States/Jump")
-target_state = NodePath("../../States/Fall")
-
-[node name="Fall_Move" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("12_fbgs2")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Fall")
-target_state = NodePath("../../States/Move")
-
-[node name="Fall_Idle" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("14_qrf63")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Fall")
-target_state = NodePath("../../States/Idle")
-
-[node name="Fall_Jump" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("15_fx22o")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Fall")
-target_state = NodePath("../../States/Jump")
-
-[node name="Any_Dash" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("16_rrbt5")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Any")
-target_state = NodePath("../../States/Dash")
-
-[node name="Dash_Fall" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("17_vni7i")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Dash")
-target_state = NodePath("../../States/Fall")
-
-[node name="Dash_Idle" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("19_aeffl")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Dash")
-target_state = NodePath("../../States/Idle")
-
-[node name="Dash_Move" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("20_w73du")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Dash")
-target_state = NodePath("../../States/Move")
-
-[node name="Fall_Wall" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("19_sw0wk")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Fall")
-target_state = NodePath("../../States/Wall")
-
-[node name="Jump_Wall" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("19_sw0wk")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Jump")
-target_state = NodePath("../../States/Wall")
-
-[node name="Climb_Wall" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("20_84rrh")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Climb")
-target_state = NodePath("../../States/Wall")
-
-[node name="Wall_Climb" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("21_jncf7")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Wall")
-target_state = NodePath("../../States/Climb")
-
-[node name="Wall_Jump" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("8_u0eg6")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Wall")
-target_state = NodePath("../../States/Jump")
-
-[node name="Climb_Jump" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("8_u0eg6")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Climb")
-target_state = NodePath("../../States/Jump")
-
-[node name="Climb_Fall" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("22_taknk")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Climb")
-target_state = NodePath("../../States/Fall")
-
-[node name="Wall_Fall" type="Node" parent="StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
-script = ExtResource("22_taknk")
-player = NodePath("../../..")
-start_state = NodePath("../../States/Wall")
-target_state = NodePath("../../States/Fall")
-
-[node name="States" type="Node" parent="StateMachine"]
-
-[node name="Any" type="Node" parent="StateMachine/States"]
-script = ExtResource("4_2ixjx")
-
-[node name="Idle" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("player")]
-script = ExtResource("8_emgqg")
-player = NodePath("../../..")
-
-[node name="Move" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("wallRaycast", "player")]
-script = ExtResource("9_wjsp2")
-wallRaycast = NodePath("../../../Raycasts/WallCast")
-player = NodePath("../../..")
-
-[node name="Jump" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("jump_head_cast_left", "jump_head_cast_right", "player")]
-script = ExtResource("10_uds7o")
-jump_head_cast_left = NodePath("../../../Raycasts/HeadRayLeft")
-jump_head_cast_right = NodePath("../../../Raycasts/HeadRayRight")
-player = NodePath("../../..")
-
-[node name="Fall" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("player")]
-script = ExtResource("14_hfwat")
-player = NodePath("../../..")
-
-[node name="Dash" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("jump_head_cast_left", "jump_head_cast_right", "player")]
-script = ExtResource("21_413tb")
-jump_head_cast_left = NodePath("../../../Raycasts/HeadRayLeft")
-jump_head_cast_right = NodePath("../../../Raycasts/HeadRayRight")
-player = NodePath("../../..")
-
-[node name="Glide" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("player")]
-script = ExtResource("24_rcc57")
-player = NodePath("../../..")
-
-[node name="Wall" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("wallRaycast", "player")]
-script = ExtResource("26_dbiao")
-wallRaycast = NodePath("../../../Raycasts/WallCast")
-player = NodePath("../../..")
-
-[node name="Climb" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("wallRaycast", "player")]
-script = ExtResource("27_effcg")
-wallRaycast = NodePath("../../../Raycasts/WallCast")
-player = NodePath("../../..")
-
-[node name="InputProcessor" type="Node" parent="."]
-script = ExtResource("9_avhq7")
-
-[node name="PlayerState" type="Node" parent="." node_paths=PackedStringArray("player")]
-script = ExtResource("11_mlib7")
-player = NodePath("..")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -8)
 position_smoothing_enabled = true
@@ -406,5 +245,210 @@ drag_bottom_margin = 0.3
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
-[connection signal="climb_event" from="InputProcessor" to="PlayerState" method="_on_climb_event"]
-[connection signal="glide_event" from="InputProcessor" to="PlayerState" method="_on_glide_event"]
+[node name="Managers" type="Node" parent="."]
+
+[node name="StateMachine" type="Node" parent="Managers" node_paths=PackedStringArray("any_state", "player")]
+script = ExtResource("3_1tha2")
+initial_state = NodePath("States/Idle")
+any_state = NodePath("States/Any")
+player = NodePath("../..")
+
+[node name="Transitions" type="Node" parent="Managers/StateMachine"]
+
+[node name="Idle_Move" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("7_wcq5c")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Idle")
+target_state = NodePath("../../States/Move")
+
+[node name="Idle_Jump" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("8_u0eg6")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Idle")
+target_state = NodePath("../../States/Jump")
+
+[node name="Move_Idle" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("8_7wd3k")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Move")
+target_state = NodePath("../../States/Idle")
+
+[node name="Move_Jump" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("8_u0eg6")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Move")
+target_state = NodePath("../../States/Jump")
+
+[node name="Move_Fall" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("start_state", "target_state")]
+script = ExtResource("10_w3oa7")
+start_state = NodePath("../../States/Move")
+target_state = NodePath("../../States/Fall")
+
+[node name="Jump_Fall" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("start_state", "target_state")]
+script = ExtResource("11_xj3s7")
+start_state = NodePath("../../States/Jump")
+target_state = NodePath("../../States/Fall")
+
+[node name="Fall_Move" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("12_fbgs2")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Fall")
+target_state = NodePath("../../States/Move")
+
+[node name="Fall_Idle" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("14_qrf63")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Fall")
+target_state = NodePath("../../States/Idle")
+
+[node name="Fall_Jump" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("15_fx22o")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Fall")
+target_state = NodePath("../../States/Jump")
+
+[node name="Any_Dash" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("16_rrbt5")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Any")
+target_state = NodePath("../../States/Dash")
+
+[node name="Any_Dead" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("18_b1axs")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Any")
+target_state = NodePath("../../States/Dead")
+
+[node name="Dash_Fall" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("17_vni7i")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Dash")
+target_state = NodePath("../../States/Fall")
+
+[node name="Dash_Idle" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("19_aeffl")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Dash")
+target_state = NodePath("../../States/Idle")
+
+[node name="Dash_Move" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("20_w73du")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Dash")
+target_state = NodePath("../../States/Move")
+
+[node name="Fall_Wall" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("19_sw0wk")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Fall")
+target_state = NodePath("../../States/Wall")
+
+[node name="Jump_Wall" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("19_sw0wk")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Jump")
+target_state = NodePath("../../States/Wall")
+
+[node name="Climb_Wall" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("20_84rrh")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Climb")
+target_state = NodePath("../../States/Wall")
+
+[node name="Wall_Climb" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("21_jncf7")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Wall")
+target_state = NodePath("../../States/Climb")
+
+[node name="Wall_Jump" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("8_u0eg6")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Wall")
+target_state = NodePath("../../States/Jump")
+
+[node name="Climb_Jump" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("8_u0eg6")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Climb")
+target_state = NodePath("../../States/Jump")
+
+[node name="Climb_Fall" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("22_taknk")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Climb")
+target_state = NodePath("../../States/Fall")
+
+[node name="Wall_Fall" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("22_taknk")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Wall")
+target_state = NodePath("../../States/Fall")
+
+[node name="Dead_Idle" type="Node" parent="Managers/StateMachine/Transitions" node_paths=PackedStringArray("player", "start_state", "target_state")]
+script = ExtResource("26_ifsrr")
+player = NodePath("../../../..")
+start_state = NodePath("../../States/Dead")
+target_state = NodePath("../../States/Idle")
+
+[node name="States" type="Node" parent="Managers/StateMachine"]
+
+[node name="Any" type="Node" parent="Managers/StateMachine/States"]
+script = ExtResource("4_2ixjx")
+
+[node name="Idle" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("player")]
+script = ExtResource("8_emgqg")
+player = NodePath("../../../..")
+
+[node name="Move" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("wallRaycast", "player")]
+script = ExtResource("9_wjsp2")
+wallRaycast = NodePath("../../../../Raycasts/WallCast")
+player = NodePath("../../../..")
+
+[node name="Jump" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("jump_head_cast_left", "jump_head_cast_right", "player")]
+script = ExtResource("10_uds7o")
+jump_head_cast_left = NodePath("../../../../Raycasts/HeadRayLeft")
+jump_head_cast_right = NodePath("../../../../Raycasts/HeadRayRight")
+player = NodePath("../../../..")
+
+[node name="Fall" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("player")]
+script = ExtResource("14_hfwat")
+player = NodePath("../../../..")
+
+[node name="Dash" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("jump_head_cast_left", "jump_head_cast_right", "player")]
+script = ExtResource("21_413tb")
+jump_head_cast_left = NodePath("../../../../Raycasts/HeadRayLeft")
+jump_head_cast_right = NodePath("../../../../Raycasts/HeadRayRight")
+player = NodePath("../../../..")
+
+[node name="Glide" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("player")]
+script = ExtResource("24_rcc57")
+player = NodePath("../../../..")
+
+[node name="Wall" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("wallRaycast", "player")]
+script = ExtResource("26_dbiao")
+wallRaycast = NodePath("../../../../Raycasts/WallCast")
+player = NodePath("../../../..")
+
+[node name="Climb" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("wallRaycast", "player")]
+script = ExtResource("27_effcg")
+wallRaycast = NodePath("../../../../Raycasts/WallCast")
+player = NodePath("../../../..")
+
+[node name="Dead" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("player")]
+script = ExtResource("34_8btwd")
+player = NodePath("../../../..")
+
+[node name="InputProcessor" type="Node" parent="Managers"]
+script = ExtResource("9_avhq7")
+
+[node name="PlayerState" type="Node" parent="Managers" node_paths=PackedStringArray("player")]
+script = ExtResource("11_mlib7")
+player = NodePath("../..")
+
+[node name="DamageHandler" type="Node" parent="Managers"]
+script = ExtResource("36_5vkiu")
+
+[connection signal="respawn" from="." to="Skin" method="_on_player_respawn"]
+[connection signal="climb_event" from="Managers/InputProcessor" to="Managers/PlayerState" method="_on_climb_event"]
+[connection signal="glide_event" from="Managers/InputProcessor" to="Managers/PlayerState" method="_on_glide_event"]

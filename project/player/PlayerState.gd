@@ -11,19 +11,32 @@ var _jump_dir : int = false
 var _wants_to_glide = false
 var _wants_to_climb = false
 
-var _is_dashing:bool=true
-var _is_gliding:bool=true
+var _is_dashing:bool=false
+var _is_gliding:bool=false
 #@onready var _jump_buffer_timer = Timer.new()
 
-func _should_glide()-> bool:
-	return _wants_to_glide
 
-func is_gliding()-> bool:
-	return _is_gliding
+var climb_energy_timer : Timer=Timer.new()
+var glide_energy_timer : Timer=Timer.new()
+
+func _ready() -> void:
+	
+	_coyote_timer.timeout.connect(__coyote_timer_over)
+	_coyote_timer.wait_time = player.player_movement_config.jump_coyote_time
+	_coyote_timer.one_shot = true
+	add_child(_coyote_timer)
+	
+	climb_energy_timer.wait_time = 1
+	climb_energy_timer.one_shot = false
+	add_child(climb_energy_timer)
+	
+	glide_energy_timer.wait_time = 1
+	glide_energy_timer.one_shot = false
+	add_child(glide_energy_timer)
 
 func _process(_delta:float):
 	update(player)
-
+		
 func update(player : Player):
 	
 	if not player.is_on_floor():		
@@ -40,23 +53,44 @@ func update(player : Player):
 			
 		else: #is Falling
 			_jump_dir = 1		
-			_is_gliding = _should_glide()
+			if can_glide() and not is_gliding():
+				start_gliding()								
+			if is_gliding() and not can_glide()  :
+				stop_gliding()
 	else:
-		
-		_is_gliding = false
+		if is_gliding():
+			stop_gliding()
 		_on_ground = true
 		_jump_dir = 0
 		if _in_air and player.get_real_velocity().y > 0:
 			#print("Land")
 			_just_landed()
 
-func _ready() -> void:
-	
-	_coyote_timer.timeout.connect(__coyote_timer_over)
-	_coyote_timer.wait_time = player.player_movement_config.jump_coyote_time
-	_coyote_timer.one_shot = true
-	add_child(_coyote_timer)
 
+
+func _should_glide()-> bool:
+	return _wants_to_glide
+	
+	
+func can_glide()-> bool:
+	return _should_glide() and  AlEnergySystem.get_current_energy() >= player.player_movement_config.glide_energy_per_second
+
+func is_gliding()-> bool:
+	return _is_gliding
+
+func start_gliding():
+	print("Start GLide")
+	_is_gliding = true
+	if glide_energy_timer.is_stopped():
+		glide_energy_timer.timeout.connect(update_glide_energy)
+		glide_energy_timer.start()
+		
+
+func stop_gliding():	
+	print("Stop GLide")
+	_is_gliding = false
+	
+	
 func _start_coyote_time() -> void:
 	#print("coyote_ started")
 	_on_ground = false
@@ -75,12 +109,39 @@ func __coyote_timer_over() -> void:
 	#print("coyote_ over")
 
 
+var _is_dead = false
+
+func kill_player() :
+	_is_dead = true 
+
+func trigger_respawn() :	
+	player.respawn.emit()
+	player.player_skin.respawn_player()
+	player.player_skin.respawn_animation_finished.connect(respawn_finished)
+	#await player.player_skin.anim_player.animation_finished
+	
+	#_is_dead = false 
+
+func respawn_finished() :	
+	player.player_skin.respawn_animation_finished.disconnect(respawn_finished)
+	_is_dead = false 
+	
+	
+func player_respawned() :
+	_is_dead = true 
+
+func is_dead() -> bool:
+	return _is_dead
+	
+func is_movement_blocked() -> bool:
+	return is_dead()
+	
 
 func can_jump() -> bool:
 	return _on_ground or _is_coyote_time
 	
-func can_dash( ) -> bool:
-	return true
+func can_dash( ) -> bool:	
+	return not is_movement_blocked() and AlEnergySystem.get_current_energy() >= player.player_movement_config.dash_energy
 	
 	
 func start_dash( ) -> void :
@@ -95,7 +156,25 @@ func is_dashing( ) -> bool:
 
 var _is_climbing = false 
 
+
+func update_climb_energy():
+	if not is_climbing():
+		climb_energy_timer.stop()
+		climb_energy_timer.timeout.disconnect(update_climb_energy)
+		return
+	AlEnergySystem.reduce_energy(player.player_movement_config.climb_energy_per_second)
+	
+func update_glide_energy():
+	if not is_gliding():
+		glide_energy_timer.stop()
+		glide_energy_timer.timeout.disconnect(update_glide_energy)
+		return
+	AlEnergySystem.reduce_energy(player.player_movement_config.glide_energy_per_second)
+	
 func start_climb( ) -> void :
+	if climb_energy_timer.is_stopped():
+		climb_energy_timer.timeout.connect(update_climb_energy)
+		climb_energy_timer.start()
 	_is_climbing = true 
 	
 	
@@ -106,7 +185,7 @@ func is_climbing( ) -> bool:
 	return _is_climbing
 
 func can_climb()->bool :
-	return _wants_to_climb and player.is_on_wall()
+	return _wants_to_climb and player.is_on_wall() and AlEnergySystem.get_max_energy() >= player.player_movement_config.climb_energy_per_second
 
 
 

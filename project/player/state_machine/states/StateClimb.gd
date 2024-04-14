@@ -4,6 +4,7 @@ class_name State_Climb extends StateMovementBase
 @export var wallRaycast: WallRaycast
 @onready var climb_acceleration : float = player.player_movement_config.climb_velocity / player.player_movement_config.climb_time_to_peak
 
+
 func enter(_msg := {}) -> void:
 	state_started.emit()
 	player.player_skin.play_animation(PlayerSkin.ANIMATION_STATE.CLIMB)
@@ -17,6 +18,8 @@ func exit() -> void:
 #		player.player_state.coyote_timer.start()
 
 
+func update_energy():	
+	AlEnergySystem.reduce_energy(player.player_movement_config.climb_energy_per_second)
 
 func physics_update(ownerBody: CharacterBody2D,delta: float) -> void:
 	var vertical_dir = player.input_processor.vertical_dir

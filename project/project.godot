@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 run/max_fps=120
 config/icon="res://icon.svg"
 
+[autoload]
+
+AlEnergySystem="*res://scripts/AL_EnergySystem.gd"
+
 [display]
 
 window/size/viewport_width=320
@@ -28,6 +32,10 @@ window/vsync/vsync_mode=0
 
 movie_writer/disable_vsync=true
 movie_writer/fps=120
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
@@ -97,6 +105,7 @@ climb={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Traps"
 2d_physics/layer_4="Collectables"
+2d_physics/layer_5="Interaction"
 
 [rendering]
 

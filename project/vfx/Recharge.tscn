@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://du71dohdodcnp"]
+
+[sub_resource type="Gradient" id="Gradient_cn04w"]
+offsets = PackedFloat32Array(0.00666667, 0.14, 1)
+colors = PackedColorArray(0, 100, 4.14118, 0, 0.134228, 86.7114, 3.72026, 1, 1, 1, 1, 0)
+
+[node name="Recharge" type="CPUParticles2D"]
+emitting = false
+amount = 100
+lifetime = 0.5
+emission_shape = 2
+emission_sphere_radius = 16.0
+gravity = Vector2(0, 0)
+radial_accel_min = -150.0
+radial_accel_max = -100.0
+color_ramp = SubResource("Gradient_cn04w")

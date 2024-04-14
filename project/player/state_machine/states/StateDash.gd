@@ -23,6 +23,8 @@ var main_dir:Vector2
 func enter(_msg := {}) -> void:
 	#player.player_skin.play_animation(PlayerSkin.ANIMATION_STATE.JUMP)
 	main_dir = player.input_processor.main_direction.normalized()
+	if main_dir.x == 0 and main_dir.y ==0:
+		main_dir.x = player.player_skin.current_view_dir
 	AlEnergySystem.reduce_energy(player.player_movement_config.dash_energy)
 	print("start dashing" )
 	_dash_timer.timeout.connect(__dash_timer_over)
@@ -51,7 +53,7 @@ func __dash_timer_over()->void:
 	
 	print("stop dashing")
 	
-func physics_update(ownerBody: CharacterBody2D,delta: float) -> void:
+func physics_update(_ownerBody: CharacterBody2D,delta: float) -> void:
 	#var direction = input_processor.direction
 	
 	#player.velocity = main_dir * dash_velocity

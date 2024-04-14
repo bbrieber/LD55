@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://d1ucl6tqgbvcl"]
+[gd_scene load_steps=59 format=3 uid="uid://d1ucl6tqgbvcl"]
 
 [ext_resource type="Texture2D" uid="uid://itcqm5ff4ubh" path="res://sprite_sheets/Ghost_Boy.png" id="1_2qfp7"]
 [ext_resource type="Script" path="res://player/PlayerSkin.gd" id="1_68yiu"]
@@ -46,7 +46,6 @@
 [ext_resource type="Script" path="res://player/state_machine/states/StateDeath.gd" id="34_8btwd"]
 [ext_resource type="Script" path="res://player/DamageHandler.gd" id="36_5vkiu"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateCharge.gd" id="39_jetua"]
-[ext_resource type="Script" path="res://player/state_machine/states/StateFade.gd" id="44_nv1s5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_da1d5"]
 size = Vector2(4, 13)
@@ -599,7 +598,7 @@ script = ExtResource("39_jetua")
 player = NodePath("../../../..")
 
 [node name="Fade" type="Node" parent="Managers/StateMachine/States" node_paths=PackedStringArray("player")]
-script = ExtResource("44_nv1s5")
+script = ExtResource("39_jetua")
 player = NodePath("../../../..")
 
 [node name="InputProcessor" type="Node" parent="Managers"]

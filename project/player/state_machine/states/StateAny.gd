@@ -1,17 +1,17 @@
 extends State
 class_name State_Any
 
-func handle_input(ownerBody: CharacterBody2D, _event: InputEvent) -> void:
+func handle_input(_ownerBody: CharacterBody2D, _event: InputEvent) -> void:
 	pass
 
 
 # Virtual function. Corresponds to the `_process()` callback.
-func update(ownerBody: CharacterBody2D,_delta: float) -> void:
+func update(_ownerBody: CharacterBody2D,_delta: float) -> void:
 	pass
 
 
 # Virtual function. Corresponds to the `_physics_process()` callback.
-func physics_update(ownerBody: CharacterBody2D,_delta: float) -> void:
+func physics_update(_ownerBody: CharacterBody2D,_delta: float) -> void:
 	pass
 
 

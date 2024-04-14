@@ -7,8 +7,7 @@ func _ready():
 	max_value = AlEnergySystem.get_max_energy()
 	value = AlEnergySystem.get_current_energy()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _energy_changed(energy : Energy):
+func _energy_changed(_energy : Energy):
 	max_value = AlEnergySystem.get_max_energy()
 	value = AlEnergySystem.get_current_energy()
 	

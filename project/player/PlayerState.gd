@@ -8,14 +8,20 @@ var _in_air  : bool = false
 var _is_coyote_time : bool = false
 var _jump_dir : int = false
 
-var _wants_to_glide = false
-var _wants_to_climb = false
+var _wants_to_glide:bool = false
+var _wants_to_climb:bool = false
+var _wants_to_charge:bool = false
+
+
+var _wants_to_fade:bool = false
+var _is_fading:bool=false
 
 var _is_dashing:bool=false
 var _is_gliding:bool=false
 #@onready var _jump_buffer_timer = Timer.new()
 
 
+var fade_energy_timer : Timer=Timer.new()
 var climb_energy_timer : Timer=Timer.new()
 var glide_energy_timer : Timer=Timer.new()
 
@@ -33,11 +39,16 @@ func _ready() -> void:
 	glide_energy_timer.wait_time = 1
 	glide_energy_timer.one_shot = false
 	add_child(glide_energy_timer)
+	
+	
+	fade_energy_timer.wait_time = 1
+	fade_energy_timer.one_shot = false
+	add_child(fade_energy_timer)
 
 func _process(_delta:float):
-	update(player)
+	update()
 		
-func update(player : Player):
+func update():
 	
 	if not player.is_on_floor():		
 		_in_air = true
@@ -70,6 +81,7 @@ func update(player : Player):
 
 func _should_glide()-> bool:
 	return _wants_to_glide
+	
 	
 	
 func can_glide()-> bool:
@@ -171,6 +183,15 @@ func update_glide_energy():
 		return
 	AlEnergySystem.reduce_energy(player.player_movement_config.glide_energy_per_second)
 	
+	
+	
+func update_fade_energy():
+	if not is_fading():
+		fade_energy_timer.stop()
+		fade_energy_timer.timeout.disconnect(update_fade_energy)
+		return
+	AlEnergySystem.reduce_energy(player.player_movement_config.fade_energy_per_second)
+	
 func start_climb( ) -> void :
 	if climb_energy_timer.is_stopped():
 		climb_energy_timer.timeout.connect(update_climb_energy)
@@ -198,3 +219,23 @@ func _on_glide_event(wants_to_glide):
 func _on_climb_event(wants_to_climb):
 	print("wanna climb " , wants_to_climb )
 	_wants_to_climb = wants_to_climb
+
+
+func _on_charge_event(wants_to_charge):
+	_wants_to_charge = wants_to_charge
+	
+	
+var _fade = false	
+
+func is_fading()-> bool:
+	return _fade
+	
+func start_fading()-> void:
+	_fade = true
+	if fade_energy_timer.is_stopped():
+		fade_energy_timer.timeout.connect(update_fade_energy)
+		fade_energy_timer.start()
+	
+	
+func stop_fading()-> void:
+	_fade = false

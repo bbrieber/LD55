@@ -21,7 +21,7 @@ func exit() -> void:
 func update_energy():	
 	AlEnergySystem.reduce_energy(player.player_movement_config.climb_energy_per_second)
 
-func physics_update(ownerBody: CharacterBody2D,delta: float) -> void:
+func physics_update(_ownerBody: CharacterBody2D,delta: float) -> void:
 	var vertical_dir = player.input_processor.vertical_dir
 	
 		

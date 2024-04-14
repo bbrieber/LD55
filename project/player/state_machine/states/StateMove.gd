@@ -15,7 +15,7 @@ func exit() -> void:
 
 
 
-func physics_update(ownerBody: CharacterBody2D,delta: float) -> void:
+func physics_update(_ownerBody: CharacterBody2D,delta: float) -> void:
 	var horizontal_dir = player.input_processor.horizontal_dir
 	if player.is_on_wall():
 		if (wallRaycast.get_wall_dir() < 0 and horizontal_dir<0) or (wallRaycast.get_wall_dir() > 0 and horizontal_dir >0) :

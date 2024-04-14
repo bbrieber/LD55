@@ -6,7 +6,7 @@ var collectable: EnergyBall
 
 func activate_collectable()->void:
 	if not collectable: 
-		var collectable = collectable_scene.instantiate() as EnergyBall
+		collectable = collectable_scene.instantiate() as EnergyBall
 		add_child(collectable)
 
 # Called when the node enters the scene tree for the first time.
@@ -15,5 +15,5 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass

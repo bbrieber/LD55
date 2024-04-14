@@ -17,7 +17,7 @@ func exit() -> void:
 
 
 
-func physics_update(ownerBody: CharacterBody2D,delta: float) -> void:
+func physics_update(_ownerBody: CharacterBody2D,delta: float) -> void:
 	var direction = player.input_processor.direction
 	update_locomotion(direction.x,delta)
 

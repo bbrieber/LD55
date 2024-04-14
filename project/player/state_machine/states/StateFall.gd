@@ -21,7 +21,7 @@ func exit() -> void:
 
 
 
-func physics_update(ownerBody: CharacterBody2D,delta: float) -> void:
+func physics_update(_ownerBody: CharacterBody2D,delta: float) -> void:
 	max_fall_speed = _get_gravity() * player.player_movement_config.time_to_max_fallspeed * -1
 	
 	var direction = player.input_processor.direction

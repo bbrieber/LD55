@@ -15,10 +15,31 @@ enum ANIMATION_STATE {
 	TURN,
 	WALL_SLIDE,
 	DASH_FORWARD,
-	DIE
+	DIE,
+	RECHARGE
 }
 
 	
+func start_charging():
+	play_animation(PlayerSkin.ANIMATION_STATE.RECHARGE)
+	var t =	$VFX/Center_Position/Recharge as CPUParticles2D
+	t.emitting = true
+	
+	
+func fade_away():
+	anim_player.play("Fade")
+	var t =	$VFX/Center_Position/Recharge as CPUParticles2D
+	t.emitting = true
+	
+	
+func fade_back():
+	anim_player.play_backwards("Fade")
+	var t =	$VFX/Center_Position/Recharge as CPUParticles2D
+	t.emitting = true
+	
+func stop_charging():
+	var t =	$VFX/Center_Position/Recharge as CPUParticles2D
+	t.emitting = false
 
 func play_animation(animation: ANIMATION_STATE):
 	if animation == ANIMATION_STATE.IDLE:
@@ -39,6 +60,8 @@ func play_animation(animation: ANIMATION_STATE):
 		anim_player.play("DashForward")
 	elif animation == ANIMATION_STATE.DIE:
 		anim_player.play("Die")
+	elif animation == ANIMATION_STATE.RECHARGE:
+		anim_player.play("Charge")
 		
 	
 	
@@ -82,6 +105,8 @@ func _ready():
 	_ghost_timer.wait_time = 0.05
 	_ghost_timer.one_shot = false
 	add_child(_ghost_timer)
+	
+	stop_charging()
 
 
 signal respawn_animation_finished

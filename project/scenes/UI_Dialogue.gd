@@ -1,15 +1,21 @@
-extends Control
+class_name DialogueController extends Control
 
 @export var test_dialog:Dialogue
 @export var test_dialog_block:DialogBlock
 @onready var spaeker_1 : Label = $NinePatchRect/Speaker_1
 @onready var spaeker_2 : Label = $NinePatchRect/Speaker_2
 @onready var text : Label = $NinePatchRect/Text
+@onready var holder : Control = $NinePatchRect
+
+
+func _ready():
+	AlDialogueSystem.play_dialogue_request.connect(play_dialog)
 
 var current_dialogue : Dialogue
 var current_dialogue_block : DialogBlock
+var active : bool = false
+
 func show_dialog_block(dialog_block : DialogBlock):
-	get_tree().paused = true
 	$NinePatchRect.visible = true
 	
 	if dialog_block.speaker == 1:
@@ -22,30 +28,26 @@ func show_dialog_block(dialog_block : DialogBlock):
 
 func close_dialog():
 	get_tree().paused = false
-	$NinePatchRect.visible = false
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	play_dialog(test_dialog)
-	
-	
+	holder.visible = false
+	active = false
 
 func play_dialog(dialogue : Dialogue):
+	get_tree().paused = true
+	holder.visible = true
 	current_dialogue = dialogue
-	next_dialog_block()
+	active = true
+	#show_dialog_block(current_dialogue.dialog_blocks.pop_front())
 	
 func next_dialog_block():
 	current_dialogue_block = current_dialogue.dialog_blocks.pop_front()
 	if current_dialogue_block:
+		print("showing Dialog")
 		show_dialog_block(current_dialogue_block)
 	else: 
 		close_dialog()
-	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 	
-func _unhandled_input(event):
-	if Input.is_action_just_pressed("jump"):
+func _unhandled_input(_event):
+	if active and Input.is_action_just_pressed("interact"):
 		next_dialog_block()

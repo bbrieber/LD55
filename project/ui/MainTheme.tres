@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b4a02qypet62o"]
+
+[ext_resource type="FontFile" uid="uid://c1bt7i2lj3e47" path="res://fonts/Silkscreen-Regular.ttf" id="1_20ndo"]
+
+[resource]
+default_font = ExtResource("1_20ndo")
+default_font_size = 8

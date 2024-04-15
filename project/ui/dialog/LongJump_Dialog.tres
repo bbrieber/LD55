@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Dialogue" load_steps=6 format=3 uid="uid://deegha30kcm3o"]
+
+[ext_resource type="Script" path="res://ui/dialog/DialogBlock.gd" id="1_uqnby"]
+[ext_resource type="Script" path="res://ui/dialog/Dialogue.gd" id="2_g2rn6"]
+
+[sub_resource type="Resource" id="Resource_xgwov"]
+script = ExtResource("1_uqnby")
+speaker = 2
+speaker_name = &"Witch"
+text = &"This gap is quite big. You migth need your float power to cross it."
+
+[sub_resource type="Resource" id="Resource_tc1q5"]
+script = ExtResource("1_uqnby")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Press W or Up on the KeyBoard or R1 on the Controller to float while in Air. "
+
+[sub_resource type="Resource" id="Resource_3uasu"]
+script = ExtResource("1_uqnby")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Your powers ghost you energy. Remeber to recharge as soon as you can."
+
+[resource]
+script = ExtResource("2_g2rn6")
+dialog_blocks = Array[ExtResource("1_uqnby")]([SubResource("Resource_xgwov"), SubResource("Resource_tc1q5"), SubResource("Resource_3uasu")])

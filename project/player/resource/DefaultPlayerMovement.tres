@@ -22,5 +22,6 @@ climb_velocity = 32.0
 climb_time_to_peak = 0.6
 climb_energy_per_second = 0.5
 glide_energy_per_second = 0.5
+fade_energy_per_second = 0.5
 dash_energy = 5.0
 recover_energy_per_second = 1.0

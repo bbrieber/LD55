@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1aq44fmp44cl"]
+
+[ext_resource type="Texture2D" uid="uid://jmfvh64v8hg0" path="res://sprite_sheets/GraveStones.png" id="1_5v71w"]
+
+[node name="GraveStone_1" type="Node2D"]
+z_index = -1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
+texture = ExtResource("1_5v71w")
+hframes = 4

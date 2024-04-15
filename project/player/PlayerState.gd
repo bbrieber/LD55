@@ -119,6 +119,7 @@ func _just_landed() -> void:
 	#print("just landed")
 	#player_landed.emit()
 	_in_air = false
+	player.soundManager.play_land_sound()
 
 
 func __coyote_timer_over() -> void:

@@ -1,17 +1,26 @@
-extends Area2D
+class_name ScreenArea extends Area2D
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+@export var cam :Camera2D
+@onready var collision :CollisionShape2D = $CollisionShape2D
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func activate_area():
 	pass
 
-
 func _on_body_entered(body):
+	if body is Player:
+		var rect = collision.shape as RectangleShape2D
+		var x = rect.size.x /2
+		var y = rect.size.y /2
+		var buffer  = 16
+		cam.limit_left = collision.global_position.x - x - buffer
+		cam.limit_right= collision.global_position.x + x + buffer
+		cam.limit_top = collision.global_position.y - y - buffer
+		cam.limit_bottom = collision.global_position.y +y + buffer
+		return
+
+
+func _on_body_exited(body):
 	if body is Player:
 		#body.set_cam_limits
 		return

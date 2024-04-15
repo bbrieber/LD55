@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://3iy7ogrhwqdx"]
+[gd_scene load_steps=6 format=3 uid="uid://3iy7ogrhwqdx"]
 
+[ext_resource type="Theme" uid="uid://b4a02qypet62o" path="res://ui/MainTheme.tres" id="1_b8f1i"]
 [ext_resource type="Script" path="res://menu/Btn_SwitchScene.gd" id="1_ru6pr"]
 [ext_resource type="Script" path="res://scenes/Btn_Quit.gd" id="2_0s4hn"]
-[ext_resource type="PackedScene" uid="uid://dopvktdwow2x2" path="res://scenes/InGame.tscn" id="2_hiq43"]
+[ext_resource type="PackedScene" uid="uid://bjd5o4ujlrlxm" path="res://scenes/Main.tscn" id="2_1mdlt"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_bdmt3"]
 
@@ -55,14 +56,16 @@ offset_bottom = 54.0
 
 [node name="StartGame" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+theme = ExtResource("1_b8f1i")
+theme_override_font_sizes/font_size = 8
 text = "Start Game"
 script = ExtResource("1_ru6pr")
-target_scene = ExtResource("2_hiq43")
+target_scene = ExtResource("2_1mdlt")
 
 [node name="QuitGame" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+theme = ExtResource("1_b8f1i")
+theme_override_font_sizes/font_size = 8
 text = "Quit"
 script = ExtResource("2_0s4hn")
 

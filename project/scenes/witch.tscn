@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxeaxb3t0g3j"]
+
+[ext_resource type="Texture2D" uid="uid://dbeowpntwbklq" path="res://sprite_sheets/Witch.png" id="1_pukwb"]
+[ext_resource type="Script" path="res://scenes/DialogueTrigger.gd" id="2_ca7wo"]
+[ext_resource type="FontFile" uid="uid://c1bt7i2lj3e47" path="res://fonts/Silkscreen-Regular.ttf" id="4_6nh0e"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yd75t"]
+radius = 48.0
+
+[node name="Witch" type="Node2D"]
+modulate = Color(4.724, 5.118, 4.331, 0.302)
+script = ExtResource("2_ca7wo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -11)
+texture = ExtResource("1_pukwb")
+
+[node name="DialogueTrigger" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueTrigger"]
+shape = SubResource("CircleShape2D_yd75t")
+
+[node name="Label" type="Label" parent="DialogueTrigger"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -18.185
+offset_top = -33.43
+offset_right = 24.815
+offset_bottom = -22.43
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_6nh0e")
+theme_override_font_sizes/font_size = 8
+text = "Interact"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="DialogueTrigger" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="DialogueTrigger" to="." method="_on_body_exited"]

@@ -26,6 +26,7 @@ func start_jump(m_jump_velocity:float,m_jump_factor: int =1):
 	#print("JUMP")
 	jump_factor = m_jump_factor
 	player.velocity.y = - m_jump_velocity
+	player.soundManager.play_jump_sound()
 	
 func exit() -> void:
 	state_exit.emit()

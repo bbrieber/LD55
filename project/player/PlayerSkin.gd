@@ -34,8 +34,7 @@ func fade_away():
 	#anim_player.play("Fade")
 	var t =	$VFX/Center_Position/FadeAway as CPUParticles2D
 	t.emitting = true
-	
-	var sprite = $SkinSprite as Sprite2D
+	player.soundManager.play_fade_out_sound()
 	var tween = get_tree().create_tween()
 	tween.tween_property(sprite, "modulate:a", 0.25,0.5)
 	player.set_collision_layer_value ( 6, false )
@@ -45,7 +44,7 @@ func fade_away():
 	
 func fade_back():
 	#anim_player.play_backwards("Fade")
-	var sprite = $SkinSprite as Sprite2D
+	player.soundManager.play_fade_in_sound()
 	var tween = get_tree().create_tween()
 	tween.tween_property(sprite, "modulate:a", 1,0.5)
 	player.set_collision_layer_value ( 6, true )

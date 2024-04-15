@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dopvktdwow2x2"]
+[gd_scene load_steps=36 format=3 uid="uid://dopvktdwow2x2"]
 
 [ext_resource type="Texture2D" uid="uid://bsj1yffhc6ynn" path="res://background/LD55_BG_5.png" id="1_00n8o"]
 [ext_resource type="Script" path="res://scripts/UI_EnergyBar.gd" id="2_ntm7e"]
@@ -20,6 +20,14 @@
 [ext_resource type="Script" path="res://scripts/MapManager.gd" id="12_8ep5p"]
 [ext_resource type="PackedScene" uid="uid://di8kmptygdf20" path="res://map/energy_ball.tscn" id="13_mnjv8"]
 [ext_resource type="Script" path="res://scenes/CollectableSpawn.gd" id="13_xe32i"]
+[ext_resource type="Texture2D" uid="uid://dbeowpntwbklq" path="res://sprite_sheets/Witch.png" id="20_fml63"]
+[ext_resource type="Script" path="res://scenes/AudioManager.gd" id="21_3r535"]
+[ext_resource type="AudioStream" uid="uid://b7drjm6kx1eao" path="res://music/ld55_music.mp3" id="21_3rrt3"]
+[ext_resource type="Texture2D" uid="uid://bv1k80v50bmgq" path="res://sprite_sheets/Couldron.png" id="21_t37fu"]
+[ext_resource type="PackedScene" uid="uid://d1aq44fmp44cl" path="res://map/grave_stone_1.tscn" id="22_8i1ci"]
+[ext_resource type="PackedScene" uid="uid://cj5prfn85m3fk" path="res://map/grave_stone_2.tscn" id="23_4p73d"]
+[ext_resource type="PackedScene" uid="uid://q81nry4cefaw" path="res://map/grave_stone_3.tscn" id="24_pvcgb"]
+[ext_resource type="PackedScene" uid="uid://dcr34cdh2bbdl" path="res://map/grave_stone_4.tscn" id="25_sojd5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mivih"]
 border_width_left = 1
@@ -41,11 +49,50 @@ blend_mode = 3
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8etf5"]
 size = Vector2(400, 180)
 
+[sub_resource type="Animation" id="Animation_it38f"]
+resource_name = "caouldron"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_njvft"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nycor"]
+_data = {
+"RESET": SubResource("Animation_njvft"),
+"caouldron": SubResource("Animation_it38f")
+}
+
 [node name="Node" type="Node"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,6 +101,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Debug" type="Control" parent="CanvasLayer/HUD" node_paths=PackedStringArray("player")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -302,6 +350,37 @@ gizmo_extents = 23.8
 script = ExtResource("13_xe32i")
 collectable_scene = ExtResource("13_mnjv8")
 
+[node name="Witch" type="Node2D" parent="2D_Canvas"]
+position = Vector2(200, 144)
+
+[node name="Sprite2D" type="Sprite2D" parent="2D_Canvas/Witch"]
+position = Vector2(0, -11)
+texture = ExtResource("20_fml63")
+
+[node name="Caouldron" type="Node2D" parent="2D_Canvas"]
+process_mode = 3
+z_index = -1
+position = Vector2(176, 144)
+
+[node name="Sprite2D" type="Sprite2D" parent="2D_Canvas/Caouldron"]
+position = Vector2(0, -10)
+texture = ExtResource("21_t37fu")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="2D_Canvas/Caouldron"]
+libraries = {
+"": SubResource("AnimationLibrary_nycor")
+}
+autoplay = "caouldron"
+
+[node name="GraveStone_1" parent="2D_Canvas" instance=ExtResource("22_8i1ci")]
+
+[node name="GraveStone_2" parent="2D_Canvas" instance=ExtResource("23_4p73d")]
+
+[node name="GraveStone_3" parent="2D_Canvas" instance=ExtResource("24_pvcgb")]
+
+[node name="GraveStone_4" parent="2D_Canvas" instance=ExtResource("25_sojd5")]
+
 [node name="InGame" type="Node2D" parent="."]
 
 [node name="MapManager" type="Node" parent="." node_paths=PackedStringArray("player", "initial_spawn_point")]
@@ -309,9 +388,15 @@ script = ExtResource("12_8ep5p")
 player = NodePath("../2D_Canvas/Player")
 initial_spawn_point = NodePath("../2D_Canvas/Node2/SpawnPoint")
 
-[connection signal="body_entered" from="2D_Canvas/TileMap/SpikeTrapGround" to="2D_Canvas/TileMap/SpikeTrapGround" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@22964" to="2D_Canvas/TileMap/@Area2D@22964" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@22965" to="2D_Canvas/TileMap/@Area2D@22965" method="_on_body_entered"]
+[node name="AudioManager" type="Node" parent="."]
+script = ExtResource("21_3r535")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("21_3rrt3")
+autoplay = true
+bus = &"Music"
+
 [connection signal="respawn" from="2D_Canvas/Player" to="MapManager" method="_on_player_respawn"]
 [connection signal="body_entered" from="2D_Canvas/Area2D" to="2D_Canvas/Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="2D_Canvas/Collectables/Energy_Spawn_Point/EnergyBall" to="2D_Canvas/Collectables/Energy_Spawn_Point/EnergyBall" method="_on_body_entered"]
+[connection signal="finished" from="AudioManager/AudioStreamPlayer" to="AudioManager" method="_on_music_stream_player_finished"]

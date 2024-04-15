@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://d1ucl6tqgbvcl"]
+[gd_scene load_steps=68 format=3 uid="uid://d1ucl6tqgbvcl"]
 
 [ext_resource type="Texture2D" uid="uid://itcqm5ff4ubh" path="res://sprite_sheets/Ghost_Boy.png" id="1_2qfp7"]
 [ext_resource type="Script" path="res://player/PlayerSkin.gd" id="1_68yiu"]
@@ -49,6 +49,12 @@
 [ext_resource type="Script" path="res://player/DamageHandler.gd" id="36_5vkiu"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateCharge.gd" id="39_jetua"]
 [ext_resource type="Script" path="res://player/state_machine/states/StateFade.gd" id="44_nv1s5"]
+[ext_resource type="Script" path="res://player/PlayerSoundManager.gd" id="50_4hjei"]
+[ext_resource type="AudioStream" uid="uid://cjaqvnmj3h21r" path="res://sfx/Fade_In.ogg" id="51_lmeju"]
+[ext_resource type="AudioStream" uid="uid://b62m75e5n3utr" path="res://sfx/Fade_Out.ogg" id="52_ckfv7"]
+[ext_resource type="AudioStream" uid="uid://bxus7o3s7ug5x" path="res://sfx/Ha_1.ogg" id="53_i2uty"]
+[ext_resource type="AudioStream" uid="uid://dtrv7nhdc7oo7" path="res://sfx/Ha_2.ogg" id="54_ggiiv"]
+[ext_resource type="AudioStream" uid="uid://dqb5fvpal3f10" path="res://sfx/Hit.ogg" id="55_01qnn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_da1d5"]
 size = Vector2(4, 13)
@@ -307,13 +313,14 @@ _data = {
 "WallHold": SubResource("Animation_rsbvr")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_skin", "input_processor", "player_state")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_skin", "soundManager", "input_processor", "player_state")]
 collision_layer = 34
 collision_mask = 29
 script = ExtResource("1_my2o4")
 player_movement_config = ExtResource("2_3kaoq")
 initial_energy = ExtResource("3_lffau")
 player_skin = NodePath("Skin")
+soundManager = NodePath("Managers/SoundManager")
 input_processor = NodePath("Managers/InputProcessor")
 player_state = NodePath("Managers/PlayerState")
 
@@ -373,6 +380,7 @@ target_position = Vector2(1, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -8)
+enabled = false
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 drag_horizontal_enabled = true
@@ -632,6 +640,17 @@ player = NodePath("../..")
 
 [node name="DamageHandler" type="Node" parent="Managers"]
 script = ExtResource("36_5vkiu")
+
+[node name="SoundManager" type="Node" parent="Managers"]
+script = ExtResource("50_4hjei")
+fade_in_stream = ExtResource("51_lmeju")
+fade_out_stream = ExtResource("52_ckfv7")
+jump_stream = ExtResource("53_i2uty")
+dash_stream = ExtResource("54_ggiiv")
+land_stream = ExtResource("55_01qnn")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Managers/SoundManager"]
+bus = &"SFX"
 
 [connection signal="respawn" from="." to="Skin" method="_on_player_respawn"]
 [connection signal="fade_animation_finished" from="Skin" to="Managers/PlayerState" method="_on_fade_ready"]

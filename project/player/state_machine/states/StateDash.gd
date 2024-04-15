@@ -38,6 +38,7 @@ func enter(_msg := {}) -> void:
 	jump_factor = 1
 	player.velocity = main_dir * dash_velocity
 	player.player_skin.start_dash()
+	player.soundManager.play_fade_out_sound()
 	
 func exit() -> void:
 	remove_child(_dash_timer)

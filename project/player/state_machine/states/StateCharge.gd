@@ -12,10 +12,12 @@ func _ready():
 
 func enter(_msg := {}) -> void:
 	player.player_skin.start_charging()	
+	player.soundManager.play_fade_in_sound()
 	energy_timer.start()
 
 func _on_energy_timer():
 	AlEnergySystem.add_energy(player.player_movement_config.recover_energy_per_second )
+	player.soundManager.play_fade_in_sound()
 	
 func exit() -> void:
 	energy_timer.stop()

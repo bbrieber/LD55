@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://3iy7ogrhwqdx"]
+[gd_scene load_steps=7 format=3 uid="uid://3iy7ogrhwqdx"]
 
 [ext_resource type="Theme" uid="uid://b4a02qypet62o" path="res://ui/MainTheme.tres" id="1_b8f1i"]
 [ext_resource type="Script" path="res://menu/Btn_SwitchScene.gd" id="1_ru6pr"]
 [ext_resource type="Script" path="res://scenes/Btn_Quit.gd" id="2_0s4hn"]
 [ext_resource type="PackedScene" uid="uid://bjd5o4ujlrlxm" path="res://scenes/Main.tscn" id="2_1mdlt"]
+[ext_resource type="Texture2D" uid="uid://jmfvh64v8hg0" path="res://sprite_sheets/GraveStones.png" id="5_xbcij"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_bdmt3"]
 
@@ -33,6 +34,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.141176, 0.129412, 0.2, 1)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 24.0
+offset_right = 129.0
+offset_bottom = 47.0
+theme = ExtResource("1_b8f1i")
+theme_override_colors/font_color = Color(0.823529, 0.454902, 0.145098, 1)
+theme_override_colors/font_outline_color = Color(0.690196, 0.247059, 0.0901961, 1)
+theme_override_font_sizes/font_size = 16
+text = "Summoned"
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
@@ -68,6 +81,10 @@ theme = ExtResource("1_b8f1i")
 theme_override_font_sizes/font_size = 8
 text = "Quit"
 script = ExtResource("2_0s4hn")
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(34, 62)
+texture = ExtResource("5_xbcij")
 
 [connection signal="pressed" from="Control/VBoxContainer/StartGame" to="Control/VBoxContainer/StartGame" method="_on_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/QuitGame" to="Control/VBoxContainer/QuitGame" method="_on_pressed"]

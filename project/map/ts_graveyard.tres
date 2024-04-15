@@ -698,7 +698,7 @@ texture = ExtResource("7_ne8tq")
 7:1/0/physics_layer_1/angular_velocity = 0.0
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_qaulu"]
-resource_name = "false"
+resource_name = "GraveStones"
 scenes/1/scene = ExtResource("8_6emy6")
 scenes/2/scene = ExtResource("9_yw3bt")
 scenes/3/scene = ExtResource("10_jsjxk")

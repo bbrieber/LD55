@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bjd5o4ujlrlxm"]
+[gd_scene load_steps=47 format=3 uid="uid://bjd5o4ujlrlxm"]
 
 [ext_resource type="Script" path="res://scenes/Control.gd" id="1_tnfuh"]
 [ext_resource type="FontFile" uid="uid://c1bt7i2lj3e47" path="res://fonts/Silkscreen-Regular.ttf" id="2_ymuub"]
@@ -7,15 +7,17 @@
 [ext_resource type="Resource" uid="uid://djqs1a1kp5ctk" path="res://ui/dialog/TestDialog.tres" id="5_0li40"]
 [ext_resource type="Resource" uid="uid://bbshqn1f1cd7d" path="res://ui/dialog/TestDialogBlock.tres" id="6_7evdc"]
 [ext_resource type="Texture2D" uid="uid://c56vaoaxr8lgl" path="res://menu/Dialog_Box.png" id="7_8jjrn"]
+[ext_resource type="Script" path="res://scenes/PauseMenu.gd" id="8_bl0qf"]
 [ext_resource type="Texture2D" uid="uid://bsj1yffhc6ynn" path="res://background/LD55_BG_5.png" id="8_brq54"]
+[ext_resource type="Theme" uid="uid://b4a02qypet62o" path="res://ui/MainTheme.tres" id="8_qj1su"]
 [ext_resource type="Texture2D" uid="uid://dywhb84sbakn5" path="res://background/LD55_BG_4.png" id="9_x7q6x"]
 [ext_resource type="Texture2D" uid="uid://cada6sw6amayk" path="res://background/LD55_BG_3.png" id="10_058yf"]
+[ext_resource type="Script" path="res://scenes/Btn_Quit.gd" id="10_imwdm"]
 [ext_resource type="Texture2D" uid="uid://cpfkimbg1t40h" path="res://background/LD55_BG_2.png" id="11_6avn7"]
 [ext_resource type="Texture2D" uid="uid://nl7kv12l0hg4" path="res://background/LD55_BG_1.png" id="12_wp78v"]
 [ext_resource type="TileSet" uid="uid://bcxbnn32fyu0k" path="res://map/ts_graveyard.tres" id="13_87udp"]
 [ext_resource type="PackedScene" uid="uid://d1ucl6tqgbvcl" path="res://player/player.tscn" id="14_k6swc"]
 [ext_resource type="Script" path="res://scripts/MapArea.gd" id="15_sr2ok"]
-[ext_resource type="Script" path="res://scenes/Closer.gd" id="16_nf472"]
 [ext_resource type="PackedScene" uid="uid://bxeaxb3t0g3j" path="res://scenes/witch.tscn" id="17_r8lsc"]
 [ext_resource type="PackedScene" uid="uid://eo7kkqjpwxre" path="res://map/spawn_point.tscn" id="17_x03nr"]
 [ext_resource type="Resource" uid="uid://drku18ij0pf1f" path="res://ui/dialog/Dlg_Intro.tres" id="18_5wote"]
@@ -29,6 +31,8 @@
 [ext_resource type="Script" path="res://scenes/AudioManager.gd" id="23_c5b52"]
 [ext_resource type="Resource" uid="uid://cl1maoejh0h20" path="res://ui/dialog/Dlg_GoodLuck.tres" id="23_pcmrj"]
 [ext_resource type="AudioStream" uid="uid://b7drjm6kx1eao" path="res://music/ld55_music.mp3" id="24_2luqp"]
+[ext_resource type="PackedScene" uid="uid://dcr34cdh2bbdl" path="res://map/grave_stone_4.tscn" id="30_e5e64"]
+[ext_resource type="Resource" uid="uid://dpp26uoen5vx0" path="res://ui/dialog/Dlg_End.tres" id="33_akl2t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mivih"]
 border_width_left = 1
@@ -281,6 +285,46 @@ theme_override_fonts/font = ExtResource("2_ymuub")
 theme_override_font_sizes/font_size = 8
 text = "Press F or (B) to contiune"
 
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HUD"]
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.227451, 0.109804, 0.392157, 0.686275)
+script = ExtResource("8_bl0qf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HUD/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 33.0
+offset_right = 20.0
+offset_bottom = 73.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_qj1su")
+text = "Pause"
+horizontal_alignment = 1
+
+[node name="Btn_Continue" type="Button" parent="CanvasLayer/HUD/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_qj1su")
+text = "Continue"
+
+[node name="Btn_Quit" type="Button" parent="CanvasLayer/HUD/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_qj1su")
+text = "Quit"
+script = ExtResource("10_imwdm")
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 scroll_offset = Vector2(913, 500)
 scroll_base_offset = Vector2(0, 60)
@@ -341,7 +385,7 @@ layer_2/tile_data = PackedInt32Array()
 layer_3/name = "Background"
 layer_3/y_sort_origin = -2
 layer_3/z_index = -1
-layer_3/tile_data = PackedInt32Array()
+layer_3/tile_data = PackedInt32Array(655368, 4, 131072, 589845, 4, 196608, 589872, 4, 196608, 589871, 4, 131072, 589870, 4, 65536, 589894, 4, 65536, 524363, 4, 196608, 131143, 4, 196608, -327616, 4, 131072, -327622, 4, 65536, -982985, 4, 65536, -1179601, 4, 196608, -983008, 4, 131072, -327675, 4, 131072, -524288, 4, 65536, -851966, 4, 196608, -393226, 4, 196608, -655396, 4, 196608, -852028, 4, 65536, -262204, 4, 131072, 589755, 4, 65536, 589749, 4, 196608, 262098, 4, 196608)
 
 [node name="Player" parent="2D_Canvas" instance=ExtResource("14_k6swc")]
 position = Vector2(40, 160)
@@ -630,20 +674,14 @@ gizmo_extents = 23.8
 script = ExtResource("18_t6xc8")
 collectable_scene = ExtResource("19_nd2yv")
 
-[node name="Node" type="Node" parent="2D_Canvas"]
-process_mode = 3
-script = ExtResource("16_nf472")
-
-[node name="Node2" type="Node" parent="2D_Canvas"]
-
 [node name="Collectables" type="Node" parent="2D_Canvas"]
 
 [node name="MapManager" type="Node" parent="." node_paths=PackedStringArray("player", "initial_spawn_point", "initial_screen_area")]
 process_mode = 3
 script = ExtResource("22_tfd1j")
 player = NodePath("../2D_Canvas/Player")
-initial_spawn_point = NodePath("../2D_Canvas/Areas/OrbArea3/SpawnPoint")
-initial_screen_area = NodePath("../2D_Canvas/Areas/OrbArea3")
+initial_spawn_point = NodePath("../2D_Canvas/Areas/Intro_Area/SpawnPoint")
+initial_screen_area = NodePath("../2D_Canvas/Areas/Intro_Area")
 
 [node name="AudioManager" type="Node" parent="."]
 process_mode = 3
@@ -654,136 +692,12 @@ stream = ExtResource("24_2luqp")
 autoplay = true
 bus = &"Music"
 
-[connection signal="body_entered" from="2D_Canvas/TileMap/SpikeTrapGround" to="2D_Canvas/TileMap/SpikeTrapGround" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103105" to="2D_Canvas/TileMap/@Area2D@103105" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103106" to="2D_Canvas/TileMap/@Area2D@103106" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103107" to="2D_Canvas/TileMap/@Area2D@103107" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103108" to="2D_Canvas/TileMap/@Area2D@103108" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103109" to="2D_Canvas/TileMap/@Area2D@103109" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103110" to="2D_Canvas/TileMap/@Area2D@103110" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103111" to="2D_Canvas/TileMap/@Area2D@103111" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103112" to="2D_Canvas/TileMap/@Area2D@103112" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103113" to="2D_Canvas/TileMap/@Area2D@103113" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103114" to="2D_Canvas/TileMap/@Area2D@103114" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103115" to="2D_Canvas/TileMap/@Area2D@103115" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103116" to="2D_Canvas/TileMap/@Area2D@103116" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103117" to="2D_Canvas/TileMap/@Area2D@103117" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103118" to="2D_Canvas/TileMap/@Area2D@103118" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103119" to="2D_Canvas/TileMap/@Area2D@103119" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103120" to="2D_Canvas/TileMap/@Area2D@103120" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103121" to="2D_Canvas/TileMap/@Area2D@103121" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103122" to="2D_Canvas/TileMap/@Area2D@103122" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103123" to="2D_Canvas/TileMap/@Area2D@103123" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103124" to="2D_Canvas/TileMap/@Area2D@103124" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103125" to="2D_Canvas/TileMap/@Area2D@103125" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103126" to="2D_Canvas/TileMap/@Area2D@103126" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103127" to="2D_Canvas/TileMap/@Area2D@103127" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103128" to="2D_Canvas/TileMap/@Area2D@103128" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103129" to="2D_Canvas/TileMap/@Area2D@103129" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103130" to="2D_Canvas/TileMap/@Area2D@103130" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103131" to="2D_Canvas/TileMap/@Area2D@103131" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103132" to="2D_Canvas/TileMap/@Area2D@103132" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103133" to="2D_Canvas/TileMap/@Area2D@103133" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103134" to="2D_Canvas/TileMap/@Area2D@103134" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103135" to="2D_Canvas/TileMap/@Area2D@103135" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103136" to="2D_Canvas/TileMap/@Area2D@103136" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103137" to="2D_Canvas/TileMap/@Area2D@103137" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103138" to="2D_Canvas/TileMap/@Area2D@103138" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103139" to="2D_Canvas/TileMap/@Area2D@103139" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103140" to="2D_Canvas/TileMap/@Area2D@103140" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103141" to="2D_Canvas/TileMap/@Area2D@103141" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103142" to="2D_Canvas/TileMap/@Area2D@103142" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103143" to="2D_Canvas/TileMap/@Area2D@103143" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103144" to="2D_Canvas/TileMap/@Area2D@103144" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103145" to="2D_Canvas/TileMap/@Area2D@103145" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103146" to="2D_Canvas/TileMap/@Area2D@103146" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103147" to="2D_Canvas/TileMap/@Area2D@103147" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103148" to="2D_Canvas/TileMap/@Area2D@103148" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103149" to="2D_Canvas/TileMap/@Area2D@103149" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103150" to="2D_Canvas/TileMap/@Area2D@103150" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103151" to="2D_Canvas/TileMap/@Area2D@103151" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103152" to="2D_Canvas/TileMap/@Area2D@103152" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103153" to="2D_Canvas/TileMap/@Area2D@103153" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103154" to="2D_Canvas/TileMap/@Area2D@103154" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103155" to="2D_Canvas/TileMap/@Area2D@103155" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103156" to="2D_Canvas/TileMap/@Area2D@103156" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103157" to="2D_Canvas/TileMap/@Area2D@103157" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103158" to="2D_Canvas/TileMap/@Area2D@103158" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103159" to="2D_Canvas/TileMap/@Area2D@103159" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103160" to="2D_Canvas/TileMap/@Area2D@103160" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103161" to="2D_Canvas/TileMap/@Area2D@103161" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103162" to="2D_Canvas/TileMap/@Area2D@103162" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103163" to="2D_Canvas/TileMap/@Area2D@103163" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103164" to="2D_Canvas/TileMap/@Area2D@103164" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103165" to="2D_Canvas/TileMap/@Area2D@103165" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103166" to="2D_Canvas/TileMap/@Area2D@103166" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103167" to="2D_Canvas/TileMap/@Area2D@103167" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103168" to="2D_Canvas/TileMap/@Area2D@103168" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103169" to="2D_Canvas/TileMap/@Area2D@103169" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103170" to="2D_Canvas/TileMap/@Area2D@103170" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103171" to="2D_Canvas/TileMap/@Area2D@103171" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103172" to="2D_Canvas/TileMap/@Area2D@103172" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103173" to="2D_Canvas/TileMap/@Area2D@103173" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103174" to="2D_Canvas/TileMap/@Area2D@103174" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103175" to="2D_Canvas/TileMap/@Area2D@103175" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103176" to="2D_Canvas/TileMap/@Area2D@103176" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103177" to="2D_Canvas/TileMap/@Area2D@103177" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103178" to="2D_Canvas/TileMap/@Area2D@103178" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103179" to="2D_Canvas/TileMap/@Area2D@103179" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103180" to="2D_Canvas/TileMap/@Area2D@103180" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103181" to="2D_Canvas/TileMap/@Area2D@103181" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103182" to="2D_Canvas/TileMap/@Area2D@103182" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103183" to="2D_Canvas/TileMap/@Area2D@103183" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103184" to="2D_Canvas/TileMap/@Area2D@103184" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103185" to="2D_Canvas/TileMap/@Area2D@103185" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103186" to="2D_Canvas/TileMap/@Area2D@103186" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103187" to="2D_Canvas/TileMap/@Area2D@103187" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103188" to="2D_Canvas/TileMap/@Area2D@103188" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103189" to="2D_Canvas/TileMap/@Area2D@103189" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103190" to="2D_Canvas/TileMap/@Area2D@103190" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103191" to="2D_Canvas/TileMap/@Area2D@103191" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103192" to="2D_Canvas/TileMap/@Area2D@103192" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103193" to="2D_Canvas/TileMap/@Area2D@103193" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103194" to="2D_Canvas/TileMap/@Area2D@103194" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103195" to="2D_Canvas/TileMap/@Area2D@103195" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103196" to="2D_Canvas/TileMap/@Area2D@103196" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103197" to="2D_Canvas/TileMap/@Area2D@103197" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103198" to="2D_Canvas/TileMap/@Area2D@103198" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103199" to="2D_Canvas/TileMap/@Area2D@103199" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103200" to="2D_Canvas/TileMap/@Area2D@103200" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103201" to="2D_Canvas/TileMap/@Area2D@103201" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103202" to="2D_Canvas/TileMap/@Area2D@103202" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103203" to="2D_Canvas/TileMap/@Area2D@103203" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103204" to="2D_Canvas/TileMap/@Area2D@103204" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103205" to="2D_Canvas/TileMap/@Area2D@103205" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103206" to="2D_Canvas/TileMap/@Area2D@103206" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103207" to="2D_Canvas/TileMap/@Area2D@103207" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103208" to="2D_Canvas/TileMap/@Area2D@103208" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103209" to="2D_Canvas/TileMap/@Area2D@103209" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103210" to="2D_Canvas/TileMap/@Area2D@103210" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103211" to="2D_Canvas/TileMap/@Area2D@103211" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103212" to="2D_Canvas/TileMap/@Area2D@103212" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103213" to="2D_Canvas/TileMap/@Area2D@103213" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103214" to="2D_Canvas/TileMap/@Area2D@103214" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103215" to="2D_Canvas/TileMap/@Area2D@103215" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@103216" to="2D_Canvas/TileMap/@Area2D@103216" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104910" to="2D_Canvas/TileMap/@Area2D@104910" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104911" to="2D_Canvas/TileMap/@Area2D@104911" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104912" to="2D_Canvas/TileMap/@Area2D@104912" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104913" to="2D_Canvas/TileMap/@Area2D@104913" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104917" to="2D_Canvas/TileMap/@Area2D@104917" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104918" to="2D_Canvas/TileMap/@Area2D@104918" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104919" to="2D_Canvas/TileMap/@Area2D@104919" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104920" to="2D_Canvas/TileMap/@Area2D@104920" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104921" to="2D_Canvas/TileMap/@Area2D@104921" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104925" to="2D_Canvas/TileMap/@Area2D@104925" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104926" to="2D_Canvas/TileMap/@Area2D@104926" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104927" to="2D_Canvas/TileMap/@Area2D@104927" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104928" to="2D_Canvas/TileMap/@Area2D@104928" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104929" to="2D_Canvas/TileMap/@Area2D@104929" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104930" to="2D_Canvas/TileMap/@Area2D@104930" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104931" to="2D_Canvas/TileMap/@Area2D@104931" method="_on_body_entered"]
-[connection signal="body_entered" from="2D_Canvas/TileMap/@Area2D@104932" to="2D_Canvas/TileMap/@Area2D@104932" method="_on_body_entered"]
+[node name="GraveStone_4" parent="." instance=ExtResource("30_e5e64")]
+position = Vector2(-158, 88)
+dialogue = ExtResource("33_akl2t")
+
+[connection signal="pressed" from="CanvasLayer/HUD/ColorRect/VBoxContainer/Btn_Continue" to="CanvasLayer/HUD/ColorRect" method="deactivate_menu"]
+[connection signal="pressed" from="CanvasLayer/HUD/ColorRect/VBoxContainer/Btn_Quit" to="CanvasLayer/HUD/ColorRect/VBoxContainer/Btn_Quit" method="_on_pressed"]
 [connection signal="respawn" from="2D_Canvas/Player" to="MapManager" method="_on_player_respawn"]
 [connection signal="body_entered" from="2D_Canvas/Areas/Intro_Area" to="2D_Canvas/Areas/Intro_Area" method="_on_body_entered"]
 [connection signal="body_exited" from="2D_Canvas/Areas/Intro_Area" to="2D_Canvas/Areas/Intro_Area" method="_on_body_exited"]

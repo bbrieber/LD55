@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Dialogue" load_steps=5 format=3 uid="uid://dpp26uoen5vx0"]
+
+[ext_resource type="Script" path="res://ui/dialog/DialogBlock.gd" id="1_2u0o1"]
+[ext_resource type="Script" path="res://ui/dialog/Dialogue.gd" id="2_pj5ku"]
+
+[sub_resource type="Resource" id="Resource_ouci6"]
+script = ExtResource("1_2u0o1")
+speaker = 2
+speaker_name = &""
+text = &"As the boy touches his own grave he is filled with a feeling of inner peace. He lays down and rests..."
+
+[sub_resource type="Resource" id="Resource_meruj"]
+script = ExtResource("1_2u0o1")
+speaker = 1
+speaker_name = &""
+text = &"...the End (you can close the game now) "
+
+[resource]
+script = ExtResource("2_pj5ku")
+dialog_blocks = Array[ExtResource("1_2u0o1")]([SubResource("Resource_ouci6"), SubResource("Resource_meruj")])

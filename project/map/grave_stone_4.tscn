@@ -1,12 +1,35 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcr34cdh2bbdl"]
+[gd_scene load_steps=5 format=3 uid="uid://dcr34cdh2bbdl"]
 
 [ext_resource type="Texture2D" uid="uid://jmfvh64v8hg0" path="res://sprite_sheets/GraveStones.png" id="1_3pfh3"]
+[ext_resource type="Script" path="res://scenes/DialogueTrigger.gd" id="1_s5gt2"]
+[ext_resource type="Theme" uid="uid://b4a02qypet62o" path="res://ui/MainTheme.tres" id="3_2q4ci"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nr12m"]
+radius = 16.0
 
 [node name="GraveStone_4" type="Node2D"]
 z_index = -1
+script = ExtResource("1_s5gt2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 2)
 texture = ExtResource("1_3pfh3")
 hframes = 4
 frame = 3
+
+[node name="DialogueTrigger" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueTrigger"]
+shape = SubResource("CircleShape2D_nr12m")
+
+[node name="Label" type="Label" parent="DialogueTrigger"]
+visible = false
+offset_left = -20.0
+offset_top = -19.0
+offset_right = 23.0
+offset_bottom = 4.0
+theme = ExtResource("3_2q4ci")
+text = "Interact"
+
+[connection signal="body_entered" from="DialogueTrigger" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="DialogueTrigger" to="." method="_on_body_exited"]

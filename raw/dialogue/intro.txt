@@ -1,0 +1,61 @@
+Witch
+
+Hmm...
+
+You don't look like a warrior. More Like a small boy.
+
+
+###################
+GhostBoy
+
+I am a boy. Where am I?
+I am quite sure I should be dead!
+
+###################
+Witch
+
+Seems like some of the components I used for the ritual were to weak.
+I shouldn't have trusted this goblin...
+
+###################
+Witch
+
+I am sorry I summoned you. I was acutally trying to summon someone else.
+Try to find your own grave. Then you can go to sleep until someone else summons you.
+
+
+###################
+GhostBoy
+
+But how should I do that. I am just a little boy
+
+###################
+Witch
+
+You are a ghost this means you have greater powers than you think.
+I can show you how to use them.
+
+
+###################
+Witch
+
+Let us start with something easy.
+It seems you already know that you can move around using the direction keys or A and D on the keyboard.
+
+###################
+Witch
+
+You can jump by pressing Space on the keyboard or A on the Controller.
+
+
+###################
+Witch
+
+Now try something harder. 
+Try to concentrate on the nature around you. You can consume it's energy while your staying on the ground.
+
+
+###################
+Witch
+
+Press Q on the keyboard or Y on the Controller to recharge your powers.

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Dialogue" load_steps=5 format=3 uid="uid://dbvqhi6kbq45a"]
+
+[ext_resource type="Script" path="res://ui/dialog/DialogBlock.gd" id="1_j34et"]
+[ext_resource type="Script" path="res://ui/dialog/Dialogue.gd" id="2_qsdpa"]
+
+[sub_resource type="Resource" id="Resource_ouci6"]
+script = ExtResource("1_j34et")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Your most powerful ability is the dash. You can use it to push yourself into one direction while you are in air.Try to use it to get up to this platform."
+
+[sub_resource type="Resource" id="Resource_0scqv"]
+script = ExtResource("1_j34et")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Press into the direction you want to move and then Shift on your keyboard or X on the Controller to start a dash."
+
+[resource]
+script = ExtResource("2_qsdpa")
+dialog_blocks = Array[ExtResource("1_j34et")]([SubResource("Resource_ouci6"), SubResource("Resource_0scqv")])

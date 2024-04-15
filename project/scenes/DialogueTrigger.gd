@@ -13,6 +13,7 @@ func interact():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _unhandled_key_input(event):
+	
 	if not active:
 		return
 	if Input.is_action_just_pressed("interact"):

@@ -1,0 +1,68 @@
+[gd_resource type="Resource" script_class="Dialogue" load_steps=13 format=3 uid="uid://drku18ij0pf1f"]
+
+[ext_resource type="Script" path="res://ui/dialog/DialogBlock.gd" id="1_27d1l"]
+[ext_resource type="Script" path="res://ui/dialog/Dialogue.gd" id="2_7ypu6"]
+
+[sub_resource type="Resource" id="Resource_xgwov"]
+script = ExtResource("1_27d1l")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Hmm...You don\'t look like a warrior. More Like a small boy."
+
+[sub_resource type="Resource" id="Resource_tc1q5"]
+script = ExtResource("1_27d1l")
+speaker = 1
+speaker_name = &"Ghost Boy"
+text = &"I am a boy. Where am I?I am quite sure I should be dead!"
+
+[sub_resource type="Resource" id="Resource_3yw6c"]
+script = ExtResource("1_27d1l")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Seems like some of the components I used for the ritual were to weak.I shouldn\'t have trusted this goblin..."
+
+[sub_resource type="Resource" id="Resource_db44b"]
+script = ExtResource("1_27d1l")
+speaker = 2
+speaker_name = &"Witch"
+text = &"I am sorry I summoned you. I was acutally trying to summon someone else.Try to find your own grave. Then you can go to sleep until someone else summons you."
+
+[sub_resource type="Resource" id="Resource_waebs"]
+script = ExtResource("1_27d1l")
+speaker = 1
+speaker_name = &"Ghost Boy"
+text = &"But how should I do that. I am just a little boy"
+
+[sub_resource type="Resource" id="Resource_qhka8"]
+script = ExtResource("1_27d1l")
+speaker = 2
+speaker_name = &"Witch Boy"
+text = &"You are a ghost this means you have greater powers than you think.I can show you how to use them."
+
+[sub_resource type="Resource" id="Resource_vfvml"]
+script = ExtResource("1_27d1l")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Let us start with something easy.It seems you already know that you can move around using the direction keys or A and D on the keyboard."
+
+[sub_resource type="Resource" id="Resource_5503g"]
+script = ExtResource("1_27d1l")
+speaker = 2
+speaker_name = &"Witch"
+text = &"You can jump by pressing Space on the keyboard or A on the Controller."
+
+[sub_resource type="Resource" id="Resource_0dg3q"]
+script = ExtResource("1_27d1l")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Now try something harder. Try to concentrate on the nature around you. You can consume it\'s energy while your staying on the ground."
+
+[sub_resource type="Resource" id="Resource_8hv0a"]
+script = ExtResource("1_27d1l")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Press Q on the keyboard or Y on the Controller to recharge your powers."
+
+[resource]
+script = ExtResource("2_7ypu6")
+dialog_blocks = Array[ExtResource("1_27d1l")]([SubResource("Resource_xgwov"), SubResource("Resource_tc1q5"), SubResource("Resource_3yw6c"), SubResource("Resource_db44b"), SubResource("Resource_waebs"), SubResource("Resource_qhka8"), SubResource("Resource_vfvml"), SubResource("Resource_5503g"), SubResource("Resource_0dg3q"), SubResource("Resource_8hv0a")])

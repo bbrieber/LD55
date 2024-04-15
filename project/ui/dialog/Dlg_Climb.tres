@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Dialogue" load_steps=5 format=3 uid="uid://ckxfjskqnfqxr"]
+
+[ext_resource type="Script" path="res://ui/dialog/DialogBlock.gd" id="1_dpiec"]
+[ext_resource type="Script" path="res://ui/dialog/Dialogue.gd" id="2_uh2lf"]
+
+[sub_resource type="Resource" id="Resource_ouci6"]
+script = ExtResource("1_dpiec")
+speaker = 2
+speaker_name = &"Witch"
+text = &"A ghost weigths nearly nothing so it is quite easy to climb up a wall for you"
+
+[sub_resource type="Resource" id="Resource_0scqv"]
+script = ExtResource("1_dpiec")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Press Cntrl on the keyboard or L1 on the Controller while you are on a wall to start climbing"
+
+[resource]
+script = ExtResource("2_uh2lf")
+dialog_blocks = Array[ExtResource("1_dpiec")]([SubResource("Resource_ouci6"), SubResource("Resource_0scqv")])

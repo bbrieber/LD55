@@ -7,19 +7,19 @@
 script = ExtResource("1_uqnby")
 speaker = 2
 speaker_name = &"Witch"
-text = &"This gap is quite big. You migth need your float power to cross it."
+text = &"This gap looks to big for a normal jump. Try to levitate to the other side"
 
 [sub_resource type="Resource" id="Resource_tc1q5"]
 script = ExtResource("1_uqnby")
 speaker = 2
 speaker_name = &"Witch"
-text = &"Press W or Up on the KeyBoard or R1 on the Controller to float while in Air. "
+text = &"Press UP or W on the keyboard or R1 on the Controller while you are in air to levitate."
 
 [sub_resource type="Resource" id="Resource_3uasu"]
 script = ExtResource("1_uqnby")
 speaker = 2
 speaker_name = &"Witch"
-text = &"Your powers ghost you energy. Remeber to recharge as soon as you can."
+text = &"This consumes your energy so don\'t forget to recharge as soon as you can"
 
 [resource]
 script = ExtResource("2_g2rn6")

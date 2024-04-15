@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_a18dn")
+max_energy = 9

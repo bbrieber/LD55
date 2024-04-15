@@ -1,0 +1,10 @@
+Witch
+
+A ghost weigths nearly nothing so it is quite easy to climb up a wall for you
+
+
+###################
+Witch
+
+Press Cntrl on the keyboard or L1 on the Controller while you are on a wall to start climbing
+

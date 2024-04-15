@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Dialogue" load_steps=4 format=3 uid="uid://cl1maoejh0h20"]
+
+[ext_resource type="Script" path="res://ui/dialog/DialogBlock.gd" id="1_djtf4"]
+[ext_resource type="Script" path="res://ui/dialog/Dialogue.gd" id="2_8i1q8"]
+
+[sub_resource type="Resource" id="Resource_ouci6"]
+script = ExtResource("1_djtf4")
+speaker = 2
+speaker_name = &"Witch"
+text = &"Now that you know how to move as a ghost you can go and find your grave.Good Luck"
+
+[resource]
+script = ExtResource("2_8i1q8")
+dialog_blocks = Array[ExtResource("1_djtf4")]([SubResource("Resource_ouci6")])

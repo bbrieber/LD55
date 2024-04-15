@@ -1,0 +1,10 @@
+Witch
+
+Your most powerful ability is the dash. You can use it to push yourself into one direction while you are in air.
+Try to use it to get up to this platform.
+
+
+###################
+Witch
+
+Press into the direction you want to move and then Shift on your keyboard or X on the Controller to start a dash.

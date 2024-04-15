@@ -11,7 +11,7 @@ signal energy_changed(energy :Energy)
 # Called when the node enters the scene tree for the first time.
 func initialize(new_energy: Energy ):
 	energy = new_energy
-	restore_energy()
+	energy_changed.emit(energy)
 
 
 func get_current_energy():

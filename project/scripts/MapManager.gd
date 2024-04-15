@@ -19,3 +19,4 @@ func set_spawn_point(spawn_point : SpawnPoint):
 
 func _on_player_respawn():
 	player.position = current_spawn_point.global_position
+	current_spawn_point.respawn()

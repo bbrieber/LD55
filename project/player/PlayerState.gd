@@ -207,7 +207,7 @@ func is_climbing( ) -> bool:
 	return _is_climbing
 
 func can_climb()->bool :
-	return _wants_to_climb and player.is_on_wall() and AlEnergySystem.get_max_energy() >= player.player_movement_config.climb_energy_per_second
+	return _wants_to_climb and player.is_on_wall() and AlEnergySystem.get_current_energy() >= player.player_movement_config.climb_energy_per_second
 
 func _on_climb_event(wants_to_climb):
 	print("wanna climb " , wants_to_climb )

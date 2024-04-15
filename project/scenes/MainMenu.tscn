@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://3iy7ogrhwqdx"]
+[gd_scene load_steps=10 format=3 uid="uid://3iy7ogrhwqdx"]
 
 [ext_resource type="Theme" uid="uid://b4a02qypet62o" path="res://ui/MainTheme.tres" id="1_b8f1i"]
 [ext_resource type="Script" path="res://menu/Btn_SwitchScene.gd" id="1_ru6pr"]
 [ext_resource type="Script" path="res://scenes/Btn_Quit.gd" id="2_0s4hn"]
 [ext_resource type="PackedScene" uid="uid://bjd5o4ujlrlxm" path="res://scenes/Main.tscn" id="2_1mdlt"]
+[ext_resource type="Texture2D" uid="uid://cpfkimbg1t40h" path="res://background/LD55_BG_2.png" id="2_wqkkw"]
+[ext_resource type="Texture2D" uid="uid://cada6sw6amayk" path="res://background/LD55_BG_3.png" id="3_snvtu"]
+[ext_resource type="Texture2D" uid="uid://dywhb84sbakn5" path="res://background/LD55_BG_4.png" id="4_we2wy"]
 [ext_resource type="Texture2D" uid="uid://jmfvh64v8hg0" path="res://sprite_sheets/GraveStones.png" id="5_xbcij"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_bdmt3"]
@@ -46,6 +49,18 @@ theme_override_colors/font_color = Color(0.823529, 0.454902, 0.145098, 1)
 theme_override_colors/font_outline_color = Color(0.690196, 0.247059, 0.0901961, 1)
 theme_override_font_sizes/font_size = 16
 text = "Summoned"
+
+[node name="Ld55Bg4" type="Sprite2D" parent="."]
+position = Vector2(105, 27)
+texture = ExtResource("4_we2wy")
+
+[node name="Ld55Bg3" type="Sprite2D" parent="."]
+position = Vector2(270, 37)
+texture = ExtResource("3_snvtu")
+
+[node name="Ld55Bg2" type="Sprite2D" parent="."]
+position = Vector2(72, 35)
+texture = ExtResource("2_wqkkw")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
